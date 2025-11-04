@@ -182,7 +182,7 @@ products.forEach(product => {
           <p><span>$${product.price}</span> por porcion</p>
       </div>
       </div>
-      <a href="/productDetail.html" class="btn btnPrimary">Ver producto</a>
+      <a href="/products" class="btn btnPrimary">Ver producto</a>
   `;
 
   productsContainer.appendChild(card);

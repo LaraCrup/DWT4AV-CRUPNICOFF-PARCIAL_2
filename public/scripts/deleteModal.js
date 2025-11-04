@@ -119,11 +119,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(() => {
                     const currentPage = window.location.pathname;
                     if (currentPage.includes('product')) {
-                        window.location.href = '/admin/products.html';
+                        window.location.href = '/admin/products';
                     } else if (currentPage.includes('categor')) {
-                        window.location.href = '/admin/categories.html';
+                        window.location.href = '/admin/categorias';
                     } else if (currentPage.includes('user')) {
-                        window.location.href = '/admin/users.html';
+                        window.location.href = '/admin/usuarios';
                     }
                 }, 1000);
                 closeModal();

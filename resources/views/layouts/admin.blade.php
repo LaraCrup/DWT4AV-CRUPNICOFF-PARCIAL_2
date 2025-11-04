@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Admin</title>
+    <link rel="icon" type="image/ico" href="/images/favicon.ico">
+    <link rel="stylesheet" href="/styles/mainStyles.css">
+    <link rel="stylesheet" href="/styles/mainAdminStyles.css">
+    <link rel="stylesheet" href="/styles/dashboardStyles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header>
+        <button id="menu" class="menuButton">
+            <svg class="menuIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+        <div>
+            <img src="../images/shared/logo.png" alt="Logo Tortas Manuela" class="logoHeader">
+        </div>
+        <nav class="navDesktop">
+            <ul class="fontBody">
+                <li><a href="{{ route('admin.dashboard') }}">Inicio</a></li>
+                <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
+                <li><a href="{{ route('admin.categorias.index') }}">Categorias</a></li>
+                <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
+            </ul>
+            <div class="btnNav fontBody">
+                <a href="{{ route('logout') }}" class="btn btnPrimary">Cerrar Sesión</a>
+            </div>
+        </nav>
+    </header>
+    <div id="backgroundMenu" class="menuOverlay"></div>
+    <div id="lateralMenu" class="lateralMenu">
+        <div class="menuContent">
+            <button id="cruz-cerrar" class="closeButton">
+                &times;
+            </button>
+            <nav class="navMobile">
+                <ul class="fontBody">
+                    <li><a href="{{ route('admin.dashboard') }}">Inicio</a></li>
+                    <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
+                    <li><a href="{{ route('admin.categorias.index') }}">Categorias</a></li>
+                    <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
+                </ul>
+                <div class="btnNav fontBody">
+                    <a href="{{ route('logout') }}" class="btn btnPrimary">Cerrar Sesión</a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <main>
+        @yield('content')
+    </main>
+
+    <footer>
+        <div class="infoFooter">
+            <p class="fontTitle">Info. Clave</p>
+            <ul class="fontBody">
+                <li>Lara Crupnicoff</li>
+                <li>19/08/2003</li>
+                <li>lara.crupnicoff@davinci.edu.ar</li>
+            </ul>
+        </div>
+        <div class="navFooter">
+            <ul class="fontBody">
+                <li><a href="{{ route('admin.dashboard') }}">Inicio</a></li>
+                <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
+                <li><a href="{{ route('admin.categorias.index') }}">Categorias</a></li>
+                <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
+            </ul>
+        </div>
+    </footer>
+    <script src="/scripts/menu.js"></script>
+    <script src="/scripts/canvas.js"></script>
+</body>
+
+</html>

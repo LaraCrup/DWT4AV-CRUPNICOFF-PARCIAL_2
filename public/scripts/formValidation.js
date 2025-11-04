@@ -165,9 +165,9 @@ function validateLoginForm(event) {
     
     if (isValid) {
         if (event.target.id === 'loginAdminForm') {
-            window.location.href = '../admin/dashboard.html';
+            window.location.href = '/admin/dashboard';
         } else {
-            window.location.href = '/index.html';
+            window.location.href = '/';
         }
     }
 }
@@ -213,7 +213,7 @@ function validateRegisterForm(event) {
     }
     
     if (isValid) {
-        window.location.href = '/login.html';
+        window.location.href = '/login';
     }
 }
 
@@ -264,7 +264,7 @@ function validateProductForm(event) {
     }
     
     if (isValid) {
-        window.location.href = '/admin/products.html';
+        window.location.href = '/admin/products';
     }
 }
 
@@ -317,7 +317,7 @@ function validateProductEditForm(event) {
     }
     
     if (isValid) {
-        window.location.href = '/admin/products.html';
+        window.location.href = '/admin/products';
     }
 }
 
@@ -367,7 +367,7 @@ function validateUserForm(event) {
     }
     
     if (isValid) {
-        window.location.href = '/admin/users.html';
+        window.location.href = '/admin/usuarios';
     }
 }
 
@@ -419,7 +419,7 @@ function validateUserEditForm(event) {
     }
     
     if (isValid) {
-        window.location.href = '/admin/users.html';
+        window.location.href = '/admin/usuarios';
     }
 }
 
@@ -437,7 +437,7 @@ function validateCategoryForm(event) {
     }
     
     if (isValid) {
-        window.location.href = '/admin/categories.html';
+        window.location.href = '/admin/categorias';
     }
 }
 
@@ -455,7 +455,7 @@ function validateCategoryEditForm(event) {
     }
     
     if (isValid) {
-        window.location.href = '/admin/categories.html';
+        window.location.href = '/admin/categorias';
     }
 }
 

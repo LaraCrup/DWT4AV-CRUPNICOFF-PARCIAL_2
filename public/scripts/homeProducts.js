@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <p><span>$${cake.price}</span> por porcion</p>
               </div>
               </div>
-              <a href="/productDetail.html" class="btn btnPrimary" data-product-id="${cake.id}">Ver producto</a>
+              <a href="/products/${cake.id}" class="btn btnPrimary" data-product-id="${cake.id}">Ver producto</a>
           </div>
               `;
         

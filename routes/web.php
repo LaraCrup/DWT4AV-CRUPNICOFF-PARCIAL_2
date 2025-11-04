@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TortaController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\TortaController as AdminTortaController;
 use App\Http\Controllers\Admin\CategoriaController as AdminCategoriaController;
 
@@ -62,9 +64,8 @@ Route::get('/register', function () {
 })->name('register');
 
 // Ruta de admin login
-Route::get('/admin/login', function () {
-    return view('admin.login');
-})->name('admin.login');
+Route::get('/admin/login', [LoginController::class, 'show'])->name('admin.login');
+Route::post('/admin/login', [LoginController::class, 'store'])->name('admin.login.store');
 
 // Rutas de Tortas (Catálogo - Público)
 Route::prefix('tortas')->group(function () {
@@ -74,6 +75,9 @@ Route::prefix('tortas')->group(function () {
 
 // Rutas de Admin
 Route::prefix('admin')->name('admin.')->group(function () {
+    // Admin - Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     // Admin - Tortas
     Route::prefix('tortas')->name('tortas.')->group(function () {
         Route::get('/', [AdminTortaController::class, 'index'])->name('index');
