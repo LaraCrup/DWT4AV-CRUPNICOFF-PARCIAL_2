@@ -1,0 +1,164 @@
+.profileSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profileCard {
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background: var(--color-light);
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    color: var(--color-dark);
+    padding: 1rem;
+}
+
+.profilePic {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-secondary);
+}
+
+.profileHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.875rem;
+}
+
+.profileHeader h3 {
+    font-size: 1.1rem;
+}
+
+.profileCard>div{
+    width: 100%;
+}
+
+.profileInfo{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+
+#editProfileBtn {
+    padding: 0.5rem 0.5rem 0.2rem 0.5rem;
+}
+
+#editProfileBtn svg {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.cancelButton {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    border: 1px solid var(--color-secondary);
+    transition: all 0.3s ease;
+}
+
+.cancelButton:hover {
+    background-color: var(--color-secondary);
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.formGroup input {
+    width: 100%;
+    border: 1px solid var(--color-secondary);
+    border-radius: 0.25rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.875rem;
+    padding: 0.5rem;
+}
+
+.editActions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.875rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.historySection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tableScroll {
+    width: 100%;
+    max-width: 90vw;
+    overflow: auto;
+    border-radius: 12px;
+}
+
+.purchaseHistory {
+    width: 100%;
+    margin: auto;
+    font-size: 0.875rem;
+    border-radius: 12px;
+    background-color: #ececec;
+}
+
+.purchaseHistory tbody tr:nth-child(even) {
+    background-color: #d6d6d6;
+}
+
+.purchaseHistory th,
+.purchaseHistory td {
+    max-width: 18.75rem;
+    max-height: 8rem;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    padding: 12px 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-secondary);
+}
+
+.purchaseHistory th {
+    background-color: var(--color-secondary);
+    color: var(--color-dark);
+    font-weight: 900;
+}
+
+.purchaseHistory tr:last-child td {
+    border-bottom: none;
+}
+
+@media screen and (min-width: 768px) {
+    .profileCard {
+        padding: 1.5rem;
+    }
+
+    .tableScroll{
+        max-width: 700px;
+    }
+    
+}
+
+@media screen and (min-width: 1080px) {
+    .editActions .btn{
+        padding: 0.5rem 1.5rem;
+    }
+    
+}

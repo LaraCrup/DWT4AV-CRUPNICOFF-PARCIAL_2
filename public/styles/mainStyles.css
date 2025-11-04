@@ -1,0 +1,539 @@
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+.fontTitle {
+    font-family: "Gilda Display", serif;
+    font-weight: 400;
+    font-style: normal
+}
+
+.fontBody {
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+:root {
+    --color-primary: #9381FF;
+    --color-secondary: #B8B8FF;
+    --color-accent: #FFDE96;
+    --color-light: #F8F7FF;
+    --color-dark: #3B3A44;
+    --color-error: #e63946;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    background-color: var(--color-light);
+    overflow-x: hidden; /* Oculta scroll horizontal en todo el body */
+}
+
+main {
+    grid-area: main;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+section {
+    width: 100%;
+    padding: 4rem 1rem;
+    margin: 0 auto;
+}
+
+a {
+    color: inherit;
+}
+
+h1 {
+    font-size: 1.8rem;
+}
+
+.btn {
+    width: fit-content;
+    border-radius: 99px;
+    font-family: "Nunito Sans", sans-serif;
+    text-decoration: none;
+    color: var(--color-light);
+    border: none;
+    padding: 0.5rem 1.5rem;
+}
+
+.btnPrimary {
+    background-color: var(--color-primary);
+}
+
+@media screen and (min-width: 768px) {
+    section {
+        padding: 4rem 2rem;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+}
+
+@media screen and (min-width: 1080px) {
+    section {
+        padding: 6rem;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    section {
+        padding: 6rem 8rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+
+/* Header styles */
+
+header {
+    position: relative;
+    grid-area: header;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 8px 15px -5px var(--color-secondary);
+    padding: 2rem 1rem;
+}
+
+.logoHeader {
+    position: absolute;
+    top: 18px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 80px;
+    height: auto;
+}
+
+.menuButton {
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+}
+
+.menuIcon {
+    width: 28px;
+    height: 28px;
+}
+
+.btnNav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.btnNav a:nth-child(2) {
+    display: none;
+    background-color: var(--color-dark);
+}
+
+.btnNav a img{
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.menuOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.menuOverlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lateralMenu {
+    width: 75%;
+    max-width: 300px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--color-light);
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.lateralMenu.active {
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    transform: translateX(0);
+}
+
+
+.menuContent {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    position: relative;
+}
+
+.closeButton {
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    font-size: 40px;
+    color: var(--color-primary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.closeButton:hover {
+    opacity: 0.7;
+}
+
+.navMobile {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 60px;
+}
+
+.navMobile ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.navMobile ul li a {
+    text-decoration: none;
+    color: var(--color-dark);
+    font-size: 1.2rem;
+}
+
+.navDesktop {
+    display: none;
+}
+
+header ul {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    list-style: none;
+}
+
+header ul li a {
+    text-decoration: none;
+    color: var(--color-dark);
+}
+
+header ul li a:hover {
+    color: var(--color-primary);
+    transition: color 0.3s ease;
+}
+
+.cartIcon {
+    position: relative;
+}
+
+.cartIcon img {
+    width: 28px;
+    height: 28px;
+}
+
+.cartCount {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    height: 20px;
+    width: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-accent);
+    color: var(--color-dark);
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+@media screen and (min-width: 768px) {
+    header {
+        gap: 1rem;
+        padding: 2rem 1.5rem;
+    }
+
+    .logoHeader {
+        position: relative;
+        top: 0;
+    }
+
+    .menuButton,
+    .navMobile,
+    .lateralMenu,
+    .menuOverlay {
+        display: none;
+    }
+
+    .navDesktop {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    header ul {
+        gap: 1.5rem;
+    }
+
+    header ul li a {
+        font-size: 0.95rem;
+    }
+
+    .btnNav {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .btnNav a {
+        height: fit-content;
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .cartIcon {
+        display: none;
+    }
+
+    .cartCount{
+        top: -8px;
+        right: -8px;
+    }
+
+    .btnNav a.cart {
+        position: relative;
+        display: flex;
+    }
+
+    .btnNav a.cart #cartCount {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+    }
+
+    .btnNav a {
+        display: flex;
+    }
+
+}
+
+@media screen and (min-width: 1080px) {
+
+    header {
+        gap: 4rem;
+        padding: 2rem 6rem;
+    }
+
+    header ul {
+        gap: 3rem;
+    }
+
+    header ul li a {
+        font-size: 1rem;
+    }
+
+    .btn {
+        font-size: 1rem;
+        padding: 0.75rem 2rem;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+
+    header {
+        padding: 2rem 8rem;
+    }
+
+    .btnNav{
+        gap: 1.5rem;
+    }
+
+}
+
+/* CAKE CARD */
+
+.cakeCard {
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--color-dark);
+}
+
+.imgCake {
+    width: 100%;
+}
+
+.imgCake img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.infoCake {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.stars {
+    color: var(--color-accent);
+}
+
+.cakePrice {
+    text-align: end;
+}
+
+.infoCake p span {
+    display: block;
+    font-weight: 700;
+}
+
+.cakeCard .btn {
+    width: 100%;
+    text-align: center;
+}
+
+/* FOOTER */
+
+footer {
+    grid-area: footer;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+    color: var(--color-light);
+    background-color: var(--color-dark);
+    border-top: 1px solid var(--color-light);
+    padding: 2rem 1rem;
+}
+
+.infoFooter ul,
+.navFooter ul {
+    list-style: none;
+}
+
+.infoFooter p {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.infoFooter ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.navFooter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.navFooter ul {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.navFooter ul li a {
+    text-decoration: none;
+    color: var(--color-light);
+    font-weight: 600;
+    font-size: 0.875rem;
+
+}
+
+.navFooter ul li a:hover {
+    color: var(--color-secondary);
+    transition: color 0.3s ease;
+}
+
+.navFooter div {
+    display: flex;
+    gap: 1.5rem;
+}
+
+footer .btnNav a:first-child {
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    footer {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        text-align: start;
+        padding: 2rem 3rem;
+    }
+
+    .navFooter {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
+
+
+@media screen and (min-width: 1080px) {
+    footer {
+        padding: 2rem 6rem;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    footer {
+        padding: 2rem 8rem;
+    }
+}

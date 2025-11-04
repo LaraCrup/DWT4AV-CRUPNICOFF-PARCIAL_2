@@ -1,0 +1,225 @@
+.hero {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    color: var(--color-light);
+    text-align: center;
+    background: url('/storage/aboutUs/hero-about.webp') no-repeat center center;
+    background-size: cover;
+    padding: 10rem 1rem;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.hero>* {
+    position: relative;
+    z-index: 2;
+}
+
+.hero p {
+    font-size: 1rem;
+}
+
+.historySection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: var(--color-light);
+    background-color: var(--color-dark);
+}
+
+.historySection div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+}
+
+.historyIcon{
+    fill: var(--color-light);
+}
+
+.historySection img {
+    width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.teamSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+}
+
+.teamSection>div:first-of-type {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.teamSection>div:last-of-type {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.teamSection div div {
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.teamSection div div .fontTitle {
+    font-size: 1.15rem;
+}
+
+.teamSection div div p {
+    font-size: 0.875rem;
+}
+
+.teamSection div div img {
+    width: 60px;
+    height: 60px;
+    border-radius: 99px;
+}
+
+.estadisticsSection,
+.estadisticsSection div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+}
+
+.numbersContainer div {
+    gap: 0.2rem;
+}
+
+.numbersContainer span {
+    font-size: 1.5rem;
+}
+
+.numbersContainer p {
+    font-size: 0.875rem;
+}
+
+.estadisticsSection img {
+    width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+    object-position: center;
+}
+
+@media screen and (min-width: 768px) {
+    .historySection {
+        flex-direction: row;
+        gap: 2rem;
+    }
+
+    .historySection>div {
+        width: 50%;
+        align-items: flex-start;
+        text-align: start;
+    }
+
+    .historySection img {
+        width: 50%;
+        height: 100%;
+    }
+
+    #teamMembers {
+        column-gap: 4rem;
+    }
+
+    .teamSection div div {
+        max-width: 310px;
+    }
+
+    .teamSection,
+    .estadisticsSection {
+        gap: 2rem;
+    }
+
+    .estadisticsSection div {
+        text-align: start;
+    }
+
+    .estadisticsSection>div {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 2.5rem;
+    }
+
+    .numbersContainer {
+        flex-direction: row !important;
+    }
+
+    .numbersContainer div {
+        align-items: flex-start;
+    }
+}
+
+@media screen and (min-width: 1080px) {
+    .hero p {
+        font-size: 1.25rem;
+        max-width: 800px;
+    }
+
+    .teamSection div div {
+        max-width: 350px;
+    }
+
+    .estadisticsSection h2 {
+        font-size: 2rem;
+    }
+
+    .numbersContainer span {
+        font-size: 2rem;
+    }
+
+}
+
+@media screen and (min-width: 1440px) {
+    #teamMembers {
+        column-gap: 6rem;
+    }
+
+    .historySection,
+    .teamSection,
+    .estadisticsSection {
+        gap: 3rem;
+    }
+
+    .estadisticsSection>div {
+        gap: 4rem;
+    }
+
+    .estadisticsSection>div>div {
+        align-items: flex-start;
+        gap: 2rem;
+    }
+
+    .estadisticsSection img {
+        max-height: 550px;
+    }
+
+}

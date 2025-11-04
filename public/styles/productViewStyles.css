@@ -1,0 +1,89 @@
+.productDetail {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.productImageContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.productImage {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid var(--color-secondary);
+}
+
+.productInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.productInfo h2{
+    text-align: center;
+}
+
+.infoGroup{
+    color: var(--color-light);
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.allergenTag {
+    display: inline-block;
+    color: var(--color-dark);
+    font-size: 0.875rem;
+    background-color: var(--color-accent);
+    border-radius: 99px;
+    padding: 0.25rem 0.75rem;
+}
+
+.actionButtons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btnDelete {
+    background-color: var(--color-error);
+    color: var(--color-light);
+    font-size: 1rem;
+}
+
+.allergensList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+@media screen and (min-width: 768px) {
+    .productDetail {
+        max-width: 1160px;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .productImageContainer {
+        width: 50%;
+        height: auto;
+        align-items: center;
+    }
+
+    .productInfo{
+        width: 50%;
+    }
+
+    .productInfo h2{
+        text-align: left;
+        font-size: 1.8rem;
+    }
+}

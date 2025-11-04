@@ -1,0 +1,270 @@
+.dashboardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.dashboardCard {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-dark);
+    background-color: var(--color-light);
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px var(--color-secondary);
+    padding: 1rem;
+}
+
+.dashboardCard h2 {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* Sales Chart Section */
+
+.div1>div{
+    width: 100%;
+}
+
+#salesChart {
+    width: 100%;
+    height: 180px;
+}
+
+.statsInfo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.statItem {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.statValue {
+    font-weight: bold;
+}
+
+/* Top Users Section */
+
+.topUsersList {
+    width: 100%;
+    list-style: none;
+}
+
+.topUser {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-secondary);
+}
+
+.topUser:last-child {
+    border-bottom: none;
+}
+
+.userAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.userName {
+    font-size: 0.9rem;
+}
+
+.userSpent {
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.topUser.desktop-only {
+    display: none;
+}
+
+/* Product Rankings */
+
+.productRankingList {
+    width: 100%;
+    list-style: none;
+}
+
+.productItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-secondary);
+}
+
+.productItem:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.productItem img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.productItem div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.productName {
+    font-size: 0.9rem;
+}
+
+.productSales {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* Monthly Summary */
+.summaryItem {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+}
+
+.summaryIcon svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+.summaryLabel {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.summaryValue {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+@media screen and (min-width: 1080px) {
+    .parent {
+        max-height: 1100px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 1.5rem;
+    }
+
+    .dashboardCard{
+        max-width: none;
+        height: 100%;
+    }
+
+    .div1 {
+        grid-area: 1 / 1 / 3 / 4;
+        justify-content: space-between;
+    }
+
+    .div2 {
+        grid-area: 1 / 4 / 5 / 6;
+        justify-content: space-between;
+    }
+
+    .div3 {
+        grid-area: 3 / 1 / 5 / 3;
+    }
+
+    .div4 {
+        grid-area: 3 / 3 / 5 / 4;
+        justify-content: space-between;
+    }
+
+    .dashboardCard h2{
+        font-size: 1.375rem;
+    }
+
+    .div1>div{
+        max-height: 310px;
+    }
+
+    #salesChart{
+        height: 100%;
+    }
+
+    .statItem{
+        font-size: 1rem;
+    }
+
+    .topUser{
+        height: 100%;
+    }
+
+    .topUsersList{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .topUser.desktop-only {
+        display: flex;
+    }
+
+    .productRankingList{
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 1rem;
+    }
+
+    .productItem{
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .productItem:nth-child(3){
+        border: none;
+    }
+
+    .productItem img{
+        width: 100%;
+        height: 7rem;
+    }
+
+    .productItem div{
+        text-align: center;
+    }
+
+    .summaryItem{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+    }
+
+    .summaryLabel{
+        font-size: 0.9rem;
+    }
+
+    .summaryValue{
+        font-size: 1.25rem;
+    }
+}
+
+@media screen and (min-width: 1440px){
+    .productItem img{
+        width: auto;
+    }
+}

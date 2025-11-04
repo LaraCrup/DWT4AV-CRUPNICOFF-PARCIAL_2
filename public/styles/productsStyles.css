@@ -1,0 +1,154 @@
+.hero {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    color: var(--color-light);
+    text-align: center;
+    background: url('/storage/products/hero-products.webp') no-repeat center center;
+    background-size: cover;
+    padding: 10rem 1rem;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.hero>* {
+    position: relative;
+    z-index: 2;
+}
+
+.hero p {
+    font-size: 1rem;
+}
+
+.productsSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.filters {
+    width: 100%;
+    max-width: 400px;
+}
+
+.filters .btn {
+    width: 100%;
+    color: var(--color-dark);
+    background-color: var(--color-accent);
+}
+
+#filters-content {
+    margin: 1rem 0;
+}
+
+#filters-content h2 {
+    display: none;
+}
+
+#filters-content div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    color: var(--color-dark);
+}
+
+#filters-content div .fontTitle {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-family: "Gilda Display", serif;
+}
+
+#filters-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background-color: var(--color-light);
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+#filters-content div label {
+    font-family: "Nunito Sans", sans-serif;
+}
+
+#filters-content div input[type="range"] {
+    accent-color: var(--color-secondary);
+}
+
+#filters-content input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+#precio-max-value {
+    font-family: "Nunito Sans", sans-serif;
+
+}
+
+.products {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+@media screen and (min-width: 768px) {
+    .productsSection {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .filters {
+        position: sticky;
+        top: 1rem;
+        max-width: 300px;
+    }
+
+    .filters .btn {
+        display: none;
+    }
+
+    #filters-content {
+        display: flex !important;
+        gap: 1rem;
+        margin: 0;
+    }
+
+    #filters-content h2 {
+        display: block;
+        color: var(--color-dark);
+    }
+
+    .cakeCard {
+        max-width: 220px;
+    }
+
+}
+
+@media screen and (min-width: 1080px) {
+    .hero p {
+        font-size: 1.25rem;
+    }
+
+    .cakeCard {
+        max-width: 260px;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .filters {
+        max-width: 400px;
+    }
+}
