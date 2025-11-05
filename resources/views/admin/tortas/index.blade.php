@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('pageTitle', 'Productos')
+
 @section('content')
     <section>
         <div class="sectionHeader">
@@ -27,7 +29,7 @@
                             <td>{{ $torta->id }}</td>
                             <td>
                                 @if($torta->imagen ?? false)
-                                    <img src="{{ $torta->imagen }}" alt="{{ $torta->nombre }}" width="60">
+                                    <img src="{{ asset('storage/products/' . $torta->imagen) }}" alt="{{ $torta->nombre }}" width="100%">
                                 @else
                                     <img src="/images/placeholder.webp" alt="Sin imagen" width="60">
                                 @endif
@@ -35,21 +37,21 @@
                             <td>{{ $torta->nombre }}</td>
                             <td>{{ $torta->categoria->nombre ?? 'N/A' }}</td>
                             <td>
-                                @if($torta->tamanios && is_array($torta->tamanios))
-                                    @foreach($torta->tamanios as $tamanio)
-                                        <p>{{ $tamanio['nombre'] ?? '' }}: {{ $tamanio['porciones'] ?? '' }} porciones - ${{ $tamanio['precio'] ?? '0' }}</p>
+                                @if($torta->tamanos && count($torta->tamanos) > 0)
+                                    @foreach($torta->tamanos as $tamano)
+                                        <p>{{ $tamano->nombre }}: ${{ $tamano->pivot->precio }}</p>
                                     @endforeach
                                 @else
                                     <p>No hay tamaños configurados</p>
                                 @endif
                             </td>
-                            <td>{{ $torta->alergenios ?? 'Sin alérgenos' }}</td>
+                            <td>{{ $torta->alergeno ?? 'Sin alérgenos' }}</td>
                             <td class="starsTable">
-                                @if($torta->calificacion ?? false)
-                                    @for($i = 0; $i < intval($torta->calificacion); $i++)
+                                @if($torta->valoracion ?? false)
+                                    @for($i = 0; $i < intval($torta->valoracion); $i++)
                                         ★
                                     @endfor
-                                    @for($i = intval($torta->calificacion); $i < 5; $i++)
+                                    @for($i = intval($torta->valoracion); $i < 5; $i++)
                                         ☆
                                     @endfor
                                 @else

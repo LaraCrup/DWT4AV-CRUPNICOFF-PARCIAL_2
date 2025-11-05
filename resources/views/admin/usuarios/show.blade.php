@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('pageTitle', 'Detalles del Usuario')
+
 @section('content')
 <section class="relative">
     <h1 class="fontTitle">Detalle de usuario</h1>

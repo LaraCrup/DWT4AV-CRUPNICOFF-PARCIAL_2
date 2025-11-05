@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('pageTitle', 'Editar Usuario')
+
 @section('content')
 <section>
     <h1 class="fontTitle">Editar usuario</h1>

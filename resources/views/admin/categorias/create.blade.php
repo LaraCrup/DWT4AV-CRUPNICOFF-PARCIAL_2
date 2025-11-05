@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('pageTitle', 'Agregar Categoría')
+
 @section('content')
     <section>
         <h1 class="fontTitle">Agregar nueva categoría</h1>

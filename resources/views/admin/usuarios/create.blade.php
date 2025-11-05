@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('pageTitle', 'Agregar Usuario')
+
 @section('content')
 <section>
     <h1 class="fontTitle">Agregar nuevo usuario</h1>

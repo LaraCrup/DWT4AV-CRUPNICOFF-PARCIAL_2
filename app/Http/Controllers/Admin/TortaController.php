@@ -35,18 +35,42 @@ class TortaController extends Controller
         $validated = $request->validate([
             'categoria_id' => 'required|exists:categorias,id',
             'nombre' => 'required|string|max:255',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'valoracion' => 'nullable|numeric|min:0|max:5',
-            'alergeno' => 'nullable|string',
-            'descripcion' => 'nullable|string'
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'valoracion' => 'required|numeric|min:1|max:5',
+            'alergenios' => 'nullable|array',
+            'descripcion' => 'required|string',
+            'tamanos' => 'required|array|min:1',
+            'tamanos.*' => 'exists:tamanos,id',
+            'precios' => 'required|array',
+            'precios.*' => 'nullable|numeric|min:0'
         ]);
 
         if ($request->hasFile('imagen')) {
-            $path = $request->file('imagen')->store('tortas', 'public');
-            $validated['imagen'] = $path;
+            $path = $request->file('imagen')->store('products', 'public');
+            $validated['imagen'] = basename($path);
         }
 
-        Torta::create($validated);
+        // Convertir alérgenos de array a string separado por comas
+        if (!empty($validated['alergenios'])) {
+            $validated['alergeno'] = implode(', ', $validated['alergenios']);
+        } else {
+            $validated['alergeno'] = null;
+        }
+        unset($validated['alergenios']);
+
+        // Crear la torta
+        $torta = Torta::create($validated);
+
+        // Asociar tamaños con precios
+        $tamanos = $request->input('tamanos', []);
+        $precios = $request->input('precios', []);
+
+        foreach ($tamanos as $tamanoId) {
+            $precio = $precios[$tamanoId] ?? 0;
+            if ($precio > 0) {
+                $torta->tamanos()->attach($tamanoId, ['precio' => $precio]);
+            }
+        }
 
         return redirect()->route('admin.tortas.index')->with('success', 'Torta creada exitosamente');
     }
@@ -81,7 +105,7 @@ class TortaController extends Controller
             'categoria_id' => 'required|exists:categorias,id',
             'nombre' => 'required|string|max:255',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'valoracion' => 'nullable|numeric|min:0|max:5',
+            'calificacion' => 'required|numeric|min:1|max:5',
             'alergeno' => 'nullable|string',
             'descripcion' => 'nullable|string'
         ]);

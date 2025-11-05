@@ -1,5 +1,11 @@
 @extends('layouts.admin')
 
+@section('pageTitle', 'Dashboard')
+
+@push('styles')
+    <link rel="stylesheet" href="/styles/dashboardStyles.css">
+@endpush
+
 @section('content')
     <section>
         <h1 class="fontTitle">Dashboard</h1>
@@ -192,4 +198,8 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+    <script src="/scripts/canvas.js"></script>
 @endsection

@@ -1,9 +1,23 @@
 @extends('layouts.admin')
 
+@section('pageTitle', 'Agregar Producto')
+
 @section('content')
     <section>
         <h1 class="fontTitle">Agregar nuevo producto</h1>
-        <form class="formContainer fontBody" action="{{ route('admin.tortas.store') }}" method="post" enctype="multipart/form-data" id="createProductForm">
+
+        @if ($errors->any())
+            <div class="alertError fontBody" style="background-color: #fee; border: 1px solid #fcc; border-radius: 4px; padding: 1rem; margin-bottom: 1rem; color: #c33;">
+                <h3 style="margin: 0 0 0.5rem 0; color: #c33;">Errores en el formulario:</h3>
+                <ul style="margin: 0; padding-left: 1.5rem;">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form class="formContainer fontBody" action="{{ route('admin.tortas.store') }}" method="post" enctype="multipart/form-data" id="createProductForm" novalidate>
             @csrf
             <div class="formInputs">
                 <div class="formGroup">
@@ -34,43 +48,38 @@
                     <div class="sizeGroup fontBody">
                         <div class="sizeHeader">
                             <span>Tamaño</span>
-                            <span>Porciones</span>
                             <span>Precio</span>
                         </div>
                         <div class="sizeRow">
                             <div class="checkboxItem">
-                                <input type="checkbox" id="sizeGrande" name="tamanios_nombres[]" value="Grande" {{ in_array('Grande', old('tamanios_nombres', [])) ? 'checked' : '' }}>
-                                <label for="sizeGrande">Grande</label>
-                            </div>
-                            <input type="number" name="tamanios_porciones[]" placeholder="N° porciones" min="1" value="{{ old('tamanios_porciones.0') }}">
-                            <input type="number" name="tamanios_precios[]" placeholder="Precio" min="0" step="0.01" value="{{ old('tamanios_precios.0') }}">
-                        </div>
-                        <div class="sizeRow">
-                            <div class="checkboxItem">
-                                <input type="checkbox" id="sizeMediana" name="tamanios_nombres[]" value="Mediana" {{ in_array('Mediana', old('tamanios_nombres', [])) ? 'checked' : '' }}>
-                                <label for="sizeMediana">Mediana</label>
-                            </div>
-                            <input type="number" name="tamanios_porciones[]" placeholder="N° porciones" min="1" value="{{ old('tamanios_porciones.1') }}">
-                            <input type="number" name="tamanios_precios[]" placeholder="Precio" min="0" step="0.01" value="{{ old('tamanios_precios.1') }}">
-                        </div>
-                        <div class="sizeRow">
-                            <div class="checkboxItem">
-                                <input type="checkbox" id="sizeChica" name="tamanios_nombres[]" value="Chica" {{ in_array('Chica', old('tamanios_nombres', [])) ? 'checked' : '' }}>
-                                <label for="sizeChica">Chica</label>
-                            </div>
-                            <input type="number" name="tamanios_porciones[]" placeholder="N° porciones" min="1" value="{{ old('tamanios_porciones.2') }}">
-                            <input type="number" name="tamanios_precios[]" placeholder="Precio" min="0" step="0.01" value="{{ old('tamanios_precios.2') }}">
-                        </div>
-                        <div class="sizeRow">
-                            <div class="checkboxItem">
-                                <input type="checkbox" id="sizePorcion" name="tamanios_nombres[]" value="Porción" {{ in_array('Porción', old('tamanios_nombres', [])) ? 'checked' : '' }}>
+                                <input type="checkbox" id="sizePorcion" name="tamanos[]" value="1" {{ in_array('1', old('tamanos', [])) ? 'checked' : '' }}>
                                 <label for="sizePorcion">Porción</label>
                             </div>
-                            <input type="number" name="tamanios_porciones[]" value="1" readonly>
-                            <input type="number" name="tamanios_precios[]" placeholder="Precio" min="0" step="0.01" value="{{ old('tamanios_precios.3') }}">
+                            <input type="number" name="precios[1]" placeholder="Precio" min="0" step="0.01" value="{{ old('precios.1') }}" class="tamano-precio">
+                        </div>
+                        <div class="sizeRow">
+                            <div class="checkboxItem">
+                                <input type="checkbox" id="sizeChica" name="tamanos[]" value="2" {{ in_array('2', old('tamanos', [])) ? 'checked' : '' }}>
+                                <label for="sizeChica">Chica</label>
+                            </div>
+                            <input type="number" name="precios[2]" placeholder="Precio" min="0" step="0.01" value="{{ old('precios.2') }}" class="tamano-precio">
+                        </div>
+                        <div class="sizeRow">
+                            <div class="checkboxItem">
+                                <input type="checkbox" id="sizeMediana" name="tamanos[]" value="3" {{ in_array('3', old('tamanos', [])) ? 'checked' : '' }}>
+                                <label for="sizeMediana">Mediana</label>
+                            </div>
+                            <input type="number" name="precios[3]" placeholder="Precio" min="0" step="0.01" value="{{ old('precios.3') }}" class="tamano-precio">
+                        </div>
+                        <div class="sizeRow">
+                            <div class="checkboxItem">
+                                <input type="checkbox" id="sizeGrande" name="tamanos[]" value="4" {{ in_array('4', old('tamanos', [])) ? 'checked' : '' }}>
+                                <label for="sizeGrande">Grande</label>
+                            </div>
+                            <input type="number" name="precios[4]" placeholder="Precio" min="0" step="0.01" value="{{ old('precios.4') }}" class="tamano-precio">
                         </div>
                     </div>
-                    @error('tamanios_nombres')
+                    @error('tamanos')
                         <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
@@ -91,42 +100,39 @@
                 <div class="formGroup">
                     <label>Alérgenos</label>
                     <div class="checkboxGroup">
-                        <div class="checkboxItem">
-                            <input type="checkbox" id="allergenGluten" name="alergenios[]" value="Gluten" {{ in_array('Gluten', old('alergenios', [])) ? 'checked' : '' }}>
-                            <label for="allergenGluten">Gluten</label>
-                        </div>
-                        <div class="checkboxItem">
-                            <input type="checkbox" id="allergenDairy" name="alergenios[]" value="Lácteos" {{ in_array('Lácteos', old('alergenios', [])) ? 'checked' : '' }}>
-                            <label for="allergenDairy">Lácteos</label>
-                        </div>
-                        <div class="checkboxItem">
-                            <input type="checkbox" id="allergenEgg" name="alergenios[]" value="Huevo" {{ in_array('Huevo', old('alergenios', [])) ? 'checked' : '' }}>
-                            <label for="allergenEgg">Huevo</label>
-                        </div>
-                        <div class="checkboxItem">
-                            <input type="checkbox" id="allergenNuts" name="alergenios[]" value="Frutos secos" {{ in_array('Frutos secos', old('alergenios', [])) ? 'checked' : '' }}>
-                            <label for="allergenNuts">Frutos secos</label>
-                        </div>
-                        <div class="checkboxItem">
-                            <input type="checkbox" id="allergenColorants" name="alergenios[]" value="Colorantes" {{ in_array('Colorantes', old('alergenios', [])) ? 'checked' : '' }}>
-                            <label for="allergenColorants">Colorantes</label>
-                        </div>
+                        @php
+                            $allergenOptions = ['Gluten', 'Lácteos', 'Huevo', 'Frutos secos', 'Colorantes'];
+                        @endphp
+                        @foreach($allergenOptions as $allergen)
+                            <div class="checkboxItem">
+                                <input type="checkbox" id="allergen{{ str_replace(' ', '', $allergen) }}" name="alergenios[]" value="{{ $allergen }}" {{ in_array($allergen, old('alergenios', [])) ? 'checked' : '' }}>
+                                <label for="allergen{{ str_replace(' ', '', $allergen) }}">{{ $allergen }}</label>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 
                 <div class="formGroup">
-                    <label for="star5">Popularidad</label>
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" placeholder="Descripción del producto" rows="4" required>{{ old('descripcion') }}</textarea>
+                    @error('descripcion')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="formGroup">
+                    <label for="star5">Valoración</label>
                     <div class="ratingContainer">
                         <div class="rating">
-                            <input type="radio" id="star5" name="calificacion" value="5" {{ old('calificacion') == '5' ? 'checked' : '' }}>
+                            <input type="radio" id="star5" name="valoracion" value="5" {{ old('valoracion') == '5' ? 'checked' : '' }}>
                             <label for="star5">★</label>
-                            <input type="radio" id="star4" name="calificacion" value="4" {{ old('calificacion') == '4' ? 'checked' : '' }}>
+                            <input type="radio" id="star4" name="valoracion" value="4" {{ old('valoracion') == '4' ? 'checked' : '' }}>
                             <label for="star4">★</label>
-                            <input type="radio" id="star3" name="calificacion" value="3" {{ old('calificacion') == '3' ? 'checked' : '' }}>
+                            <input type="radio" id="star3" name="valoracion" value="3" {{ old('valoracion') == '3' ? 'checked' : '' }}>
                             <label for="star3">★</label>
-                            <input type="radio" id="star2" name="calificacion" value="2" {{ old('calificacion') == '2' ? 'checked' : '' }}>
+                            <input type="radio" id="star2" name="valoracion" value="2" {{ old('valoracion') == '2' ? 'checked' : '' }}>
                             <label for="star2">★</label>
-                            <input type="radio" id="star1" name="calificacion" value="1" {{ old('calificacion') == '1' ? 'checked' : '' }}>
+                            <input type="radio" id="star1" name="valoracion" value="1" {{ old('valoracion') == '1' ? 'checked' : '' }}>
                             <label for="star1">★</label>
                         </div>
                     </div>
@@ -142,25 +148,142 @@
     </section>
 
     <script>
+        const form = document.getElementById('createProductForm');
+
         // Actualizar nombre del archivo seleccionado
         document.getElementById('imagen').addEventListener('change', function(e) {
             const fileName = e.target.files[0] ? e.target.files[0].name : 'No hay archivo seleccionado';
             document.getElementById('selectedFileName').textContent = fileName;
         });
 
-        // Habilitar/deshabilitar campos según checkbox
-        const checkboxes = document.querySelectorAll('input[name="tamanios_nombres[]"]');
-        const porcionesInputs = document.querySelectorAll('input[name="tamanios_porciones[]"]');
-        const preciosInputs = document.querySelectorAll('input[name="tamanios_precios[]"]');
+        // Habilitar/deshabilitar campos según checkbox de tamaños
+        const checkboxes = document.querySelectorAll('input[name="tamanos[]"]');
+        const preciosInputs = document.querySelectorAll('.tamano-precio');
 
         checkboxes.forEach((checkbox, index) => {
+            const precioInput = preciosInputs[index];
             checkbox.addEventListener('change', function() {
-                porcionesInputs[index].disabled = !this.checked;
-                preciosInputs[index].disabled = !this.checked;
+                precioInput.disabled = !this.checked;
+                if (!this.checked) {
+                    precioInput.value = '';
+                }
             });
             // Inicializar estado
-            porcionesInputs[index].disabled = !checkbox.checked;
-            preciosInputs[index].disabled = !checkbox.checked;
+            precioInput.disabled = !checkbox.checked;
+        });
+
+        // Validación personalizada del formulario
+        form.addEventListener('submit', function(e) {
+            let hasErrors = false;
+
+            // Limpiar errores previos
+            document.querySelectorAll('.formGroup .error').forEach(el => el.remove());
+            document.querySelectorAll('.formGroup input, .formGroup select, .formGroup textarea').forEach(el => {
+                el.classList.remove('is-invalid');
+                el.style.borderColor = '';
+                el.style.backgroundColor = '';
+            });
+
+            // Validar nombre
+            const nombre = document.getElementById('nombre').value.trim();
+            if (!nombre) {
+                const nombreGroup = document.getElementById('nombre').closest('.formGroup');
+                const errorSpan = document.createElement('span');
+                errorSpan.className = 'error';
+                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem;';
+                errorSpan.textContent = 'El nombre del producto es requerido';
+                nombreGroup.appendChild(errorSpan);
+                document.getElementById('nombre').classList.add('is-invalid');
+                hasErrors = true;
+            }
+
+            // Validar categoría
+            const categoria = document.getElementById('categoria_id').value;
+            if (!categoria) {
+                const categoriaGroup = document.getElementById('categoria_id').closest('.formGroup');
+                const errorSpan = document.createElement('span');
+                errorSpan.className = 'error';
+                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem;';
+                errorSpan.textContent = 'Debe seleccionar una categoría';
+                categoriaGroup.appendChild(errorSpan);
+                document.getElementById('categoria_id').classList.add('is-invalid');
+                hasErrors = true;
+            }
+
+            // Validar que al menos un tamaño esté seleccionado
+            const tamanosSeleccionados = Array.from(checkboxes).some(cb => cb.checked);
+            if (!tamanosSeleccionados) {
+                const tamanosGroup = document.querySelector('input[name="tamanos[]"]').closest('.formGroup');
+                const errorSpan = document.createElement('span');
+                errorSpan.className = 'error';
+                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem; display: block; margin-top: 0.5rem;';
+                errorSpan.textContent = 'Debe seleccionar al menos un tamaño';
+                tamanosGroup.appendChild(errorSpan);
+                hasErrors = true;
+            }
+
+            // Validar que los tamaños seleccionados tengan precio
+            let preciosFaltantes = false;
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked && !preciosInputs[index].value) {
+                    preciosFaltantes = true;
+                }
+            });
+            if (preciosFaltantes) {
+                const tamanosGroup = document.querySelector('input[name="tamanos[]"]').closest('.formGroup');
+                if (!tamanosGroup.querySelector('.error-precios')) {
+                    const errorSpan = document.createElement('span');
+                    errorSpan.className = 'error error-precios';
+                    errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem; display: block; margin-top: 0.5rem;';
+                    errorSpan.textContent = 'Todos los tamaños seleccionados deben tener un precio';
+                    tamanosGroup.appendChild(errorSpan);
+                }
+                hasErrors = true;
+            }
+
+            // Validar imagen
+            const imagen = document.getElementById('imagen').files;
+            if (imagen.length === 0) {
+                const imagenGroup = document.getElementById('imagen').closest('.formGroup');
+                const errorSpan = document.createElement('span');
+                errorSpan.className = 'error';
+                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem;';
+                errorSpan.textContent = 'Debe seleccionar una imagen';
+                imagenGroup.appendChild(errorSpan);
+                document.getElementById('imagen').classList.add('is-invalid');
+                hasErrors = true;
+            }
+
+            // Validar descripción
+            const descripcion = document.getElementById('descripcion').value.trim();
+            if (!descripcion) {
+                const descripcionGroup = document.getElementById('descripcion').closest('.formGroup');
+                const errorSpan = document.createElement('span');
+                errorSpan.className = 'error';
+                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem;';
+                errorSpan.textContent = 'La descripción es requerida';
+                descripcionGroup.appendChild(errorSpan);
+                document.getElementById('descripcion').classList.add('is-invalid');
+                hasErrors = true;
+            }
+
+            // Validar valoración
+            const valoracionChecked = document.querySelector('input[name="valoracion"]:checked');
+            if (!valoracionChecked) {
+                const valoracionGroup = document.querySelector('.ratingContainer').closest('.formGroup');
+                const errorSpan = document.createElement('span');
+                errorSpan.className = 'error';
+                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem; display: block; margin-top: 0.5rem;';
+                errorSpan.textContent = 'Debe seleccionar una valoración';
+                valoracionGroup.appendChild(errorSpan);
+                hasErrors = true;
+            }
+
+            // Si hay errores, prevenimos el envío
+            if (hasErrors) {
+                e.preventDefault();
+                window.scrollTo(0, 0);
+            }
         });
     </script>
 @endsection

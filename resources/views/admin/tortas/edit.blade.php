@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('pageTitle', 'Editar Producto')
+
 @section('content')
     <section class="relative">
         <div class="sectionHeader">
@@ -163,6 +165,8 @@
     </section>
 
     <script>
+        const form = document.getElementById('editProductForm');
+
         // Actualizar nombre del archivo seleccionado
         document.getElementById('imagen').addEventListener('change', function(e) {
             const fileName = e.target.files[0] ? e.target.files[0].name : (document.getElementById('selectedFileName').textContent || 'No hay archivo seleccionado');
@@ -182,6 +186,94 @@
             // Inicializar estado
             porcionesInputs[index].disabled = !checkbox.checked;
             preciosInputs[index].disabled = !checkbox.checked;
+        });
+
+        // Validación personalizada del formulario
+        form.addEventListener('submit', function(e) {
+            let hasErrors = false;
+
+            // Limpiar errores previos
+            document.querySelectorAll('.formGroup .error').forEach(el => el.remove());
+            document.querySelectorAll('.formGroup input, .formGroup select, .formGroup textarea').forEach(el => {
+                el.classList.remove('is-invalid');
+                el.style.borderColor = '';
+                el.style.backgroundColor = '';
+            });
+
+            // Validar nombre
+            const nombre = document.getElementById('nombre').value.trim();
+            if (!nombre) {
+                const nombreGroup = document.getElementById('nombre').closest('.formGroup');
+                const errorSpan = document.createElement('span');
+                errorSpan.className = 'error';
+                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem;';
+                errorSpan.textContent = 'El nombre del producto es requerido';
+                nombreGroup.appendChild(errorSpan);
+                document.getElementById('nombre').classList.add('is-invalid');
+                hasErrors = true;
+            }
+
+            // Validar categoría
+            const categoria = document.getElementById('categoria_id').value;
+            if (!categoria) {
+                const categoriaGroup = document.getElementById('categoria_id').closest('.formGroup');
+                const errorSpan = document.createElement('span');
+                errorSpan.className = 'error';
+                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem;';
+                errorSpan.textContent = 'Debe seleccionar una categoría';
+                categoriaGroup.appendChild(errorSpan);
+                document.getElementById('categoria_id').classList.add('is-invalid');
+                hasErrors = true;
+            }
+
+            // Validar que al menos un tamaño esté seleccionado
+            const tamanosSeleccionados = Array.from(checkboxes).some(cb => cb.checked);
+            if (!tamanosSeleccionados) {
+                const tamanosGroup = document.querySelector('input[name="tamanios_nombres[]"]').closest('.formGroup');
+                const errorSpan = document.createElement('span');
+                errorSpan.className = 'error';
+                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem; display: block; margin-top: 0.5rem;';
+                errorSpan.textContent = 'Debe seleccionar al menos un tamaño';
+                tamanosGroup.appendChild(errorSpan);
+                hasErrors = true;
+            }
+
+            // Validar que los tamaños seleccionados tengan precio
+            let preciosFaltantes = false;
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked && !preciosInputs[index].value) {
+                    preciosFaltantes = true;
+                }
+            });
+            if (preciosFaltantes) {
+                const tamanosGroup = document.querySelector('input[name="tamanios_nombres[]"]').closest('.formGroup');
+                if (!tamanosGroup.querySelector('.error-precios')) {
+                    const errorSpan = document.createElement('span');
+                    errorSpan.className = 'error error-precios';
+                    errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem; display: block; margin-top: 0.5rem;';
+                    errorSpan.textContent = 'Todos los tamaños seleccionados deben tener un precio';
+                    tamanosGroup.appendChild(errorSpan);
+                }
+                hasErrors = true;
+            }
+
+            // Validar calificación
+            const calificacionChecked = document.querySelector('input[name="calificacion"]:checked');
+            if (!calificacionChecked) {
+                const calificacionGroup = document.querySelector('.ratingContainer').closest('.formGroup');
+                const errorSpan = document.createElement('span');
+                errorSpan.className = 'error';
+                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem; display: block; margin-top: 0.5rem;';
+                errorSpan.textContent = 'Debe seleccionar una popularidad';
+                calificacionGroup.appendChild(errorSpan);
+                hasErrors = true;
+            }
+
+            // Si hay errores, prevenimos el envío
+            if (hasErrors) {
+                e.preventDefault();
+                window.scrollTo(0, 0);
+            }
         });
     </script>
 @endsection

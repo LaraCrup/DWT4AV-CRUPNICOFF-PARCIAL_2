@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Admin</title>
-    <link rel="icon" type="image/ico" href="/images/favicon.ico">
+    <title>@yield('pageTitle', 'Admin') - Tortas Manuela</title>
     <link rel="stylesheet" href="/styles/mainStyles.css">
     <link rel="stylesheet" href="/styles/mainAdminStyles.css">
-    <link rel="stylesheet" href="/styles/dashboardStyles.css">
+    <link rel="stylesheet" href="/styles/formsStyles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @stack('styles')
 </head>
 
 <body>
@@ -28,9 +28,10 @@
                 <li><a href="{{ route('admin.dashboard') }}">Inicio</a></li>
                 <li><a href="{{ route('admin.tortas.index') }}">Productos</a></li>
                 <li><a href="{{ route('admin.categorias.index') }}">Categorias</a></li>
+                <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
             </ul>
             <div class="btnNav fontBody">
-                <a href="{{ route('logout') }}" class="btn btnPrimary">Cerrar Sesión</a>
+                <button onclick="openLogoutConfirm()" class="btn btnPrimary">Cerrar Sesión</button>
             </div>
         </nav>
     </header>
@@ -47,7 +48,7 @@
                     <li><a href="{{ route('admin.categorias.index') }}">Categorias</a></li>
                 </ul>
                 <div class="btnNav fontBody">
-                    <a href="{{ route('logout') }}" class="btn btnPrimary">Cerrar Sesión</a>
+                    <button onclick="openLogoutConfirm()" class="btn btnPrimary">Cerrar Sesión</button>
                 </div>
             </nav>
         </div>
@@ -75,7 +76,8 @@
         </div>
     </footer>
     <script src="/scripts/menu.js"></script>
-    <script src="/scripts/canvas.js"></script>
+    @include('partials.logout-confirm')
+    @yield('scripts')
 </body>
 
 </html>

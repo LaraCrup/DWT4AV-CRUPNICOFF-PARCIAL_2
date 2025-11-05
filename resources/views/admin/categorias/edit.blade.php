@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('pageTitle', 'Editar Categoría')
+
 @section('content')
     <section>
         <h1 class="fontTitle">Editar categoría</h1>

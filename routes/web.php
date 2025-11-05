@@ -7,6 +7,7 @@ use App\Http\Controllers\TortaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TortaController as AdminTortaController;
 use App\Http\Controllers\Admin\CategoriaController as AdminCategoriaController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 // Ruta de bienvenida
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -95,5 +96,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::get('/{id}/edit', [AdminCategoriaController::class, 'edit'])->name('edit');
         Route::put('/{id}', [AdminCategoriaController::class, 'update'])->name('update');
         Route::delete('/{id}', [AdminCategoriaController::class, 'destroy'])->name('destroy');
+    });
+
+    // Admin - Usuarios
+    Route::prefix('usuarios')->name('usuarios.')->group(function () {
+        Route::get('/', [AdminUserController::class, 'index'])->name('index');
+        Route::get('/create', [AdminUserController::class, 'create'])->name('create');
+        Route::post('/', [AdminUserController::class, 'store'])->name('store');
+        Route::get('/{id}', [AdminUserController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [AdminUserController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [AdminUserController::class, 'update'])->name('update');
+        Route::delete('/{id}', [AdminUserController::class, 'destroy'])->name('destroy');
     });
 });

@@ -332,6 +332,7 @@ td:last-of-type div {
 
 .starsTable {
     color: var(--color-accent);
+    white-space: nowrap !important;
 }
 
 table .btn {

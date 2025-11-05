@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('pageTitle', 'Detalles del Producto')
+
 @section('content')
     <section class="relative">
         <div class="sectionHeader">
