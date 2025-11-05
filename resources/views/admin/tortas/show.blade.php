@@ -36,15 +36,15 @@
                 <div class="infoGroup">
                     <h3 class="fontTitle">Popularidad</h3>
                     <div class="starsContainer fontBody">
-                        @if($torta->calificacion ?? false)
+                        @if($torta->valoracion ?? false)
                             <span class="starsTable">
-                                @for($i = 0; $i < intval($torta->calificacion); $i++)
+                                @for($i = 0; $i < intval($torta->valoracion); $i++)
                                     ★
                                 @endfor
-                                @for($i = intval($torta->calificacion); $i < 5; $i++)
+                                @for($i = intval($torta->valoracion); $i < 5; $i++)
                                     ☆
                                 @endfor
-                            </span> ({{ $torta->calificacion }}/5)
+                            </span> ({{ $torta->valoracion }}/5)
                         @else
                             Sin calificación
                         @endif

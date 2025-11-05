@@ -412,6 +412,7 @@ header ul li a:hover {
 
 .imgCake img {
     width: 100%;
+    height: 160px;
     object-fit: cover;
     border-radius: 20px;
 }
@@ -424,7 +425,6 @@ header ul li a:hover {
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    margin-top: 0.5rem;
 }
 
 .cakeDetails {

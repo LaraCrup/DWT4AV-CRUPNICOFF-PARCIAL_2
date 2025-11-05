@@ -109,10 +109,7 @@
                     @if($torta->imagen ?? false)
                         <div class="currentImage fontLight">
                             <p><strong>Imagen actual:</strong></p>
-                            @php
-                                $imagenPath = str_starts_with($torta->imagen, 'storage/') ? '/' . $torta->imagen : '/storage/products/' . basename($torta->imagen);
-                            @endphp
-                            <img src="{{ $imagenPath }}" alt="{{ $torta->nombre }}" width="100">
+                            <img src="/storage/products/{{ $torta->imagen }}" alt="{{ $torta->nombre }}" width="100">
                         </div>
                     @endif
                     @error('imagen')
@@ -148,18 +145,21 @@
                 </div>
 
                 <div class="formGroup">
-                    <label for="star5">Calificación</label>
+                    <label for="star5">Valoración</label>
                     <div class="ratingContainer">
                         <div class="rating">
-                            <input type="radio" id="star5" name="calificacion" value="5" {{ old('calificacion', $torta->calificacion) == 5 || old('calificacion', $torta->calificacion) == '5' ? 'checked' : '' }}>
+                            @php
+                                $valoracionActual = old('valoracion', $torta->valoracion ?? null);
+                            @endphp
+                            <input type="radio" id="star5" name="valoracion" value="5" {{ (int)$valoracionActual === 5 ? 'checked' : '' }}>
                             <label for="star5">★</label>
-                            <input type="radio" id="star4" name="calificacion" value="4" {{ old('calificacion', $torta->calificacion) == 4 || old('calificacion', $torta->calificacion) == '4' ? 'checked' : '' }}>
+                            <input type="radio" id="star4" name="valoracion" value="4" {{ (int)$valoracionActual === 4 ? 'checked' : '' }}>
                             <label for="star4">★</label>
-                            <input type="radio" id="star3" name="calificacion" value="3" {{ old('calificacion', $torta->calificacion) == 3 || old('calificacion', $torta->calificacion) == '3' ? 'checked' : '' }}>
+                            <input type="radio" id="star3" name="valoracion" value="3" {{ (int)$valoracionActual === 3 ? 'checked' : '' }}>
                             <label for="star3">★</label>
-                            <input type="radio" id="star2" name="calificacion" value="2" {{ old('calificacion', $torta->calificacion) == 2 || old('calificacion', $torta->calificacion) == '2' ? 'checked' : '' }}>
+                            <input type="radio" id="star2" name="valoracion" value="2" {{ (int)$valoracionActual === 2 ? 'checked' : '' }}>
                             <label for="star2">★</label>
-                            <input type="radio" id="star1" name="calificacion" value="1" {{ old('calificacion', $torta->calificacion) == 1 || old('calificacion', $torta->calificacion) == '1' ? 'checked' : '' }}>
+                            <input type="radio" id="star1" name="valoracion" value="1" {{ (int)$valoracionActual === 1 ? 'checked' : '' }}>
                             <label for="star1">★</label>
                         </div>
                     </div>
@@ -283,15 +283,15 @@
                 hasErrors = true;
             }
 
-            // Validar calificación
-            const calificacionChecked = document.querySelector('input[name="calificacion"]:checked');
-            if (!calificacionChecked) {
-                const calificacionGroup = document.querySelector('.ratingContainer').closest('.formGroup');
+            // Validar valoración
+            const valoracionChecked = document.querySelector('input[name="valoracion"]:checked');
+            if (!valoracionChecked) {
+                const valoracionGroup = document.querySelector('.ratingContainer').closest('.formGroup');
                 const errorSpan = document.createElement('span');
                 errorSpan.className = 'error';
                 errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem; display: block; margin-top: 0.5rem;';
-                errorSpan.textContent = 'Debe seleccionar una calificación';
-                calificacionGroup.appendChild(errorSpan);
+                errorSpan.textContent = 'Debe seleccionar una valoración';
+                valoracionGroup.appendChild(errorSpan);
                 hasErrors = true;
             }
 
