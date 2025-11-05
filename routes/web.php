@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TortaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LoginController;
@@ -9,9 +10,7 @@ use App\Http\Controllers\Admin\TortaController as AdminTortaController;
 use App\Http\Controllers\Admin\CategoriaController as AdminCategoriaController;
 
 // Ruta de bienvenida
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Ruta de contacto
 Route::get('/contactUs', function () {

@@ -41,46 +41,7 @@
         </div>
         <div class="products" id="products">
             @forelse($tortas as $torta)
-                <div class="productCard" data-id="{{ $torta->id }}" data-category="{{ $torta->categoria_id }}" data-price="{{ $torta->tamanos->min('pivot.precio') ?? 0 }}" data-rating="{{ $torta->valoracion ?? 0 }}">
-                    <div class="productImage">
-                        @if($torta->imagen)
-                            <img src="/storage/products/{{ $torta->imagen }}" alt="{{ $torta->nombre }}">
-                        @else
-                            <div class="imagePlaceholder">
-                                <span>Sin imagen</span>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="productInfo">
-                        <h3 class="fontTitle">{{ $torta->nombre }}</h3>
-
-                        @if($torta->categoria)
-                            <p class="productCategory fontBody">{{ $torta->categoria->nombre }}</p>
-                        @endif
-
-                        @if($torta->valoracion)
-                            <div class="productRating fontBody">
-                                <span>⭐ {{ number_format($torta->valoracion, 1) }}/5</span>
-                            </div>
-                        @endif
-
-                        @if($torta->tamanos->count() > 0)
-                            <p class="productPrice fontBody">
-                                Desde ${{ number_format($torta->tamanos->min('pivot.precio'), 2) }}
-                            </p>
-                        @endif
-
-                        @if($torta->alergeno)
-                            <p class="productAlergeno fontBody" title="Contiene alérgenos">
-                                ⚠️ {{ $torta->alergeno }}
-                            </p>
-                        @endif
-
-                        <a href="{{ route('tortas.show', $torta->id) }}" class="btn btnPrimary">
-                            Ver detalle
-                        </a>
-                    </div>
-                </div>
+                @include('partials.tortaCard')
             @empty
                 <div class="noProducts">
                     <p class="fontTitle">No hay tortas disponibles</p>

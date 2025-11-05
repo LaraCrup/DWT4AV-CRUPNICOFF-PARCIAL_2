@@ -101,7 +101,9 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: stretch;
     gap: 2rem;
+    row-gap: 3rem;
 }
 
 @media screen and (min-width: 768px) {

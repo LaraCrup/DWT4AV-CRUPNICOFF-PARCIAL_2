@@ -40,7 +40,7 @@
                 <h1 class="fontTitle">{{ $torta->nombre }}</h1>
                 <div class="princeRating">
                     @if($torta->tamanos->count() > 0)
-                        <p class="price fontBody">${{ number_format($torta->tamanos->min('pivot.precio'), 2) }}</p>
+                        <p id="priceDisplay" class="price fontBody">${{ number_format($torta->tamanos->min('pivot.precio'), 2) }}</p>
                     @endif
                     @if($torta->valoracion)
                         <p class="stars">

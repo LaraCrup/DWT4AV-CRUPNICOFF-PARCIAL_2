@@ -45,6 +45,11 @@
         </h2>
         <div class="carouselContainer">
             <div id="cakesSlider" class="carouselSlider">
+                @forelse($tortasDestacadas as $torta)
+                    @include('partials.tortaCard', ['isCarousel' => true])
+                @empty
+                    <p class="fontBody">No hay tortas destacadas disponibles</p>
+                @endforelse
             </div>
         </div>
     </section>
@@ -63,6 +68,5 @@
 @endsection
 
 @section('scripts')
-    <script src="./scripts/homeProducts.js"></script>
     <script src="./scripts/carouselHome.js"></script>
 @endsection

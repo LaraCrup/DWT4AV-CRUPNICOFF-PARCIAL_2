@@ -168,7 +168,7 @@
 }
 
 .cakeCard {
-    min-height: 325px;
+    min-height: 250px !important;
     padding-left: 15px;
 }
 
