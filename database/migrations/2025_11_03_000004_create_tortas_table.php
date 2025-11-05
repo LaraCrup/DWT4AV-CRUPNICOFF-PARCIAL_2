@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('categoria_id')->constrained('categorias')->onDelete('restrict');
             $table->string('nombre');
-            $table->string('imagen')->nullable();
-            $table->decimal('valoracion', 2, 1)->nullable();
+            $table->string('imagen');
+            $table->unsignedTinyInteger('valoracion');
             $table->string('alergeno')->nullable();
-            $table->text('descripcion')->nullable();
+            $table->text('descripcion');
             $table->timestamps();
         });
     }

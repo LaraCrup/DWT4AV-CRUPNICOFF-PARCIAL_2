@@ -6,17 +6,6 @@
     <section>
         <h1 class="fontTitle">Editar producto</h1>
 
-        @if ($errors->any())
-            <div class="alertError fontBody" style="background-color: #fee; border: 1px solid #fcc; border-radius: 4px; padding: 1rem; margin-bottom: 1rem; color: #c33;">
-                <h3 style="margin: 0 0 0.5rem 0; color: #c33;">Errores en el formulario:</h3>
-                <ul style="margin: 0; padding-left: 1.5rem;">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         <form class="formContainer fontBody" action="{{ route('admin.tortas.update', $torta->id) }}" method="post" enctype="multipart/form-data" id="editProductForm" novalidate>
             @csrf
             @method('PUT')
@@ -33,7 +22,7 @@
                     <label for="categoria_id">Categoría</label>
                     <select id="categoria_id" name="categoria_id" required>
                         <option value="" selected disabled>Seleccionar categoría</option>
-                        @foreach($categorias ?? [] as $categoria)
+                        @foreach($categorias as $categoria)
                             <option value="{{ $categoria->id }}" {{ old('categoria_id', $torta->categoria_id) == $categoria->id ? 'selected' : '' }}>
                                 {{ $categoria->nombre }}
                             </option>
@@ -57,36 +46,20 @@
                                 $tamanosPreciosMap[$tam->id] = $tam->pivot->precio;
                             }
                         @endphp
+                        @foreach($tamanos as $tamano)
                         <div class="sizeRow">
                             <div class="checkboxItem">
-                                <input type="checkbox" id="sizePorcion" name="tamanos[]" value="1" {{ in_array('1', old('tamanos', array_keys($tamanosPreciosMap))) ? 'checked' : '' }}>
-                                <label for="sizePorcion">Porción</label>
+                                <input type="checkbox" id="size{{ $tamano->id }}" name="tamanos[]" value="{{ $tamano->id }}" {{ in_array((string)$tamano->id, old('tamanos', array_keys($tamanosPreciosMap))) ? 'checked' : '' }}>
+                                <label for="size{{ $tamano->id }}">{{ $tamano->nombre }}</label>
                             </div>
-                            <input type="number" name="precios[1]" placeholder="Precio" min="0" step="0.01" value="{{ old('precios.1', isset($tamanosPreciosMap[1]) ? (float)$tamanosPreciosMap[1] : '') }}" class="tamano-precio">
+                            <input type="number" name="precios[{{ $tamano->id }}]" placeholder="Precio" min="0" step="0.01" value="{{ old('precios.' . $tamano->id, isset($tamanosPreciosMap[$tamano->id]) ? (float)$tamanosPreciosMap[$tamano->id] : '') }}" class="tamano-precio">
                         </div>
-                        <div class="sizeRow">
-                            <div class="checkboxItem">
-                                <input type="checkbox" id="sizeChica" name="tamanos[]" value="2" {{ in_array('2', old('tamanos', array_keys($tamanosPreciosMap))) ? 'checked' : '' }}>
-                                <label for="sizeChica">Chica</label>
-                            </div>
-                            <input type="number" name="precios[2]" placeholder="Precio" min="0" step="0.01" value="{{ old('precios.2', isset($tamanosPreciosMap[2]) ? (float)$tamanosPreciosMap[2] : '') }}" class="tamano-precio">
-                        </div>
-                        <div class="sizeRow">
-                            <div class="checkboxItem">
-                                <input type="checkbox" id="sizeMediana" name="tamanos[]" value="3" {{ in_array('3', old('tamanos', array_keys($tamanosPreciosMap))) ? 'checked' : '' }}>
-                                <label for="sizeMediana">Mediana</label>
-                            </div>
-                            <input type="number" name="precios[3]" placeholder="Precio" min="0" step="0.01" value="{{ old('precios.3', isset($tamanosPreciosMap[3]) ? (float)$tamanosPreciosMap[3] : '') }}" class="tamano-precio">
-                        </div>
-                        <div class="sizeRow">
-                            <div class="checkboxItem">
-                                <input type="checkbox" id="sizeGrande" name="tamanos[]" value="4" {{ in_array('4', old('tamanos', array_keys($tamanosPreciosMap))) ? 'checked' : '' }}>
-                                <label for="sizeGrande">Grande</label>
-                            </div>
-                            <input type="number" name="precios[4]" placeholder="Precio" min="0" step="0.01" value="{{ old('precios.4', isset($tamanosPreciosMap[4]) ? (float)$tamanosPreciosMap[4] : '') }}" class="tamano-precio">
-                        </div>
+                        @endforeach
                     </div>
                     @error('tamanos')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+                    @error('precios.*')
                         <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
@@ -190,15 +163,11 @@
     </section>
 
     <script>
-        const form = document.getElementById('editProductForm');
-
-        // Actualizar nombre del archivo seleccionado
         document.getElementById('imagen').addEventListener('change', function(e) {
             const fileName = e.target.files[0] ? e.target.files[0].name : (document.getElementById('selectedFileName').textContent || 'No hay archivo seleccionado');
             document.getElementById('selectedFileName').textContent = fileName;
         });
 
-        // Habilitar/deshabilitar campos según checkbox de tamaños
         const checkboxes = document.querySelectorAll('input[name="tamanos[]"]');
         const preciosInputs = document.querySelectorAll('.tamano-precio');
 
@@ -210,96 +179,7 @@
                     precioInput.value = '';
                 }
             });
-            // Inicializar estado
             precioInput.disabled = !checkbox.checked;
-        });
-
-        // Validación personalizada del formulario
-        form.addEventListener('submit', function(e) {
-            let hasErrors = false;
-
-            // Limpiar errores previos
-            document.querySelectorAll('.formGroup .error').forEach(el => el.remove());
-            document.querySelectorAll('.formGroup input, .formGroup select, .formGroup textarea').forEach(el => {
-                el.classList.remove('is-invalid');
-                el.style.borderColor = '';
-                el.style.backgroundColor = '';
-            });
-
-            // Validar nombre
-            const nombre = document.getElementById('nombre').value.trim();
-            if (!nombre) {
-                const nombreGroup = document.getElementById('nombre').closest('.formGroup');
-                const errorSpan = document.createElement('span');
-                errorSpan.className = 'error';
-                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem;';
-                errorSpan.textContent = 'El nombre del producto es requerido';
-                nombreGroup.appendChild(errorSpan);
-                document.getElementById('nombre').classList.add('is-invalid');
-                hasErrors = true;
-            }
-
-            // Validar categoría
-            const categoria = document.getElementById('categoria_id').value;
-            if (!categoria) {
-                const categoriaGroup = document.getElementById('categoria_id').closest('.formGroup');
-                const errorSpan = document.createElement('span');
-                errorSpan.className = 'error';
-                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem;';
-                errorSpan.textContent = 'Debe seleccionar una categoría';
-                categoriaGroup.appendChild(errorSpan);
-                document.getElementById('categoria_id').classList.add('is-invalid');
-                hasErrors = true;
-            }
-
-            // Validar que al menos un tamaño esté seleccionado
-            const tamanosSeleccionados = Array.from(checkboxes).some(cb => cb.checked);
-            if (!tamanosSeleccionados) {
-                const tamanosGroup = document.querySelector('input[name="tamanos[]"]').closest('.formGroup');
-                const errorSpan = document.createElement('span');
-                errorSpan.className = 'error';
-                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem; display: block; margin-top: 0.5rem;';
-                errorSpan.textContent = 'Debe seleccionar al menos un tamaño';
-                tamanosGroup.appendChild(errorSpan);
-                hasErrors = true;
-            }
-
-            // Validar que los tamaños seleccionados tengan precio
-            let preciosFaltantes = false;
-            checkboxes.forEach((checkbox, index) => {
-                if (checkbox.checked && !preciosInputs[index].value) {
-                    preciosFaltantes = true;
-                }
-            });
-            if (preciosFaltantes) {
-                const tamanosGroup = document.querySelector('input[name="tamanos[]"]').closest('.formGroup');
-                if (!tamanosGroup.querySelector('.error-precios')) {
-                    const errorSpan = document.createElement('span');
-                    errorSpan.className = 'error error-precios';
-                    errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem; display: block; margin-top: 0.5rem;';
-                    errorSpan.textContent = 'Todos los tamaños seleccionados deben tener un precio';
-                    tamanosGroup.appendChild(errorSpan);
-                }
-                hasErrors = true;
-            }
-
-            // Validar valoración
-            const valoracionChecked = document.querySelector('input[name="valoracion"]:checked');
-            if (!valoracionChecked) {
-                const valoracionGroup = document.querySelector('.ratingContainer').closest('.formGroup');
-                const errorSpan = document.createElement('span');
-                errorSpan.className = 'error';
-                errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem; display: block; margin-top: 0.5rem;';
-                errorSpan.textContent = 'Debe seleccionar una valoración';
-                valoracionGroup.appendChild(errorSpan);
-                hasErrors = true;
-            }
-
-            // Si hay errores, prevenimos el envío
-            if (hasErrors) {
-                e.preventDefault();
-                window.scrollTo(0, 0);
-            }
         });
     </script>
 @endsection

@@ -76,7 +76,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Admin - Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Admin - Tortas
     Route::prefix('tortas')->name('tortas.')->group(function () {
         Route::get('/', [AdminTortaController::class, 'index'])->name('index');
         Route::get('/create', [AdminTortaController::class, 'create'])->name('create');

@@ -2,6 +2,10 @@
 
 @section('pageTitle', 'Detalles del Producto')
 
+@push('styles')
+    <link rel="stylesheet" href="/styles/productViewStyles.css">
+@endpush
+
 @section('content')
     <section class="relative">
         <div class="sectionHeader">
@@ -16,11 +20,7 @@
 
         <div class="productDetail">
             <div class="productImageContainer">
-                @if($torta->imagen ?? false)
-                    <img src="{{ $torta->imagen }}" alt="{{ $torta->nombre }}" class="productImage">
-                @else
-                    <img src="/images/placeholder.webp" alt="Sin imagen" class="productImage">
-                @endif
+                <img src="{{ asset('storage/products/' . $torta->imagen) }}" alt="{{ $torta->nombre }}" class="productImage">
             </div>
 
             <div class="productInfo">
@@ -36,27 +36,23 @@
                 <div class="infoGroup">
                     <h3 class="fontTitle">Popularidad</h3>
                     <div class="starsContainer fontBody">
-                        @if($torta->valoracion ?? false)
-                            <span class="starsTable">
-                                @for($i = 0; $i < intval($torta->valoracion); $i++)
-                                    ★
-                                @endfor
-                                @for($i = intval($torta->valoracion); $i < 5; $i++)
-                                    ☆
-                                @endfor
-                            </span> ({{ $torta->valoracion }}/5)
-                        @else
-                            Sin calificación
-                        @endif
+                        <span class="starsTable">
+                            @for($i = 0; $i < intval($torta->valoracion); $i++)
+                                ★
+                            @endfor
+                            @for($i = intval($torta->valoracion); $i < 5; $i++)
+                                ☆
+                            @endfor
+                        </span> <span>({{ $torta->valoracion }}/5)</span> 
                     </div>
                 </div>
 
                 <div class="infoGroup">
                     <h3 class="fontTitle">Alérgenos</h3>
                     <div class="allergensList fontBody">
-                        @if($torta->alergenios)
+                        @if($torta->alergeno)
                             @php
-                                $alergenios = is_array($torta->alergenios) ? $torta->alergenios : explode(',', $torta->alergenios);
+                                $alergenios = explode(',', $torta->alergeno);
                             @endphp
                             @foreach($alergenios as $alergenico)
                                 <span class="allergenTag">{{ trim($alergenico) }}</span>
@@ -69,21 +65,19 @@
 
                 <div class="infoGroup">
                     <h3 class="fontTitle">Tamaños y Precios</h3>
-                    @if($torta->tamanios && is_array($torta->tamanios) && count($torta->tamanios) > 0)
-                        <table class="dataTable fontBody">
+                    @if($torta->tamanos && count($torta->tamanos) > 0)
+                        <table class="dataTable fontBody" style="margin-top: 0.5rem;">
                             <thead>
                                 <tr>
                                     <th>Tamaño</th>
-                                    <th>Porciones</th>
                                     <th>Precio</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($torta->tamanios as $tamanio)
+                                @foreach($torta->tamanos as $tamano)
                                     <tr>
-                                        <td>{{ $tamanio['nombre'] ?? '' }}</td>
-                                        <td>{{ $tamanio['porciones'] ?? '0' }}</td>
-                                        <td>${{ $tamanio['precio'] ?? '0' }}</td>
+                                        <td>{{ $tamano->nombre }}</td>
+                                        <td>${{ $tamano->pivot->precio }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -95,53 +89,15 @@
 
                 <div class="actionButtons">
                     <a href="{{ route('admin.tortas.edit', $torta->id) }}" class="btn btnPrimary">Editar producto</a>
-                    <button class="btn btnDelete" id="deleteBtn">Eliminar producto</button>
+                    <button class="btn btnDelete deleteBtn" data-id="{{ $torta->id }}" data-nombre="{{ $torta->nombre }}">Eliminar producto</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="modal">
-        <div class="modalContent">
-            <div class="modalHeader">
-                <h2 class="fontTitle">Confirmar eliminación</h2>
-                <button class="closeModalBtn">&times;</button>
-            </div>
-            <div class="modalBody fontBody">
-                <p>¿Estás seguro que deseas eliminar este producto?</p>
-                <p id="deleteItemInfo">El producto "{{ $torta->nombre }}" será eliminado permanentemente.</p>
-            </div>
-            <div class="modalFooter">
-                <button id="cancelDeleteBtn" class="btn btnSecondary">Cancelar</button>
-                <form id="deleteForm" method="POST" action="{{ route('admin.tortas.destroy', $torta->id) }}" style="display: inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btnDelete">Eliminar</button>
-                </form>
-            </div>
-        </div>
-    </div>
+    @include('partials.deleteModal', [
+        'route' => route('admin.tortas.destroy', ':id'),
+        'itemName' => 'producto'
+    ])
 
-    <script>
-        // Abrir modal de eliminación
-        document.getElementById('deleteBtn').addEventListener('click', function() {
-            document.getElementById('deleteModal').style.display = 'flex';
-        });
-
-        // Cerrar modal
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').style.display = 'none';
-        }
-
-        document.querySelector('.closeModalBtn').addEventListener('click', closeDeleteModal);
-        document.getElementById('cancelDeleteBtn').addEventListener('click', closeDeleteModal);
-
-        // Cerrar modal al hacer click fuera de él
-        document.getElementById('deleteModal').addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeDeleteModal();
-            }
-        });
-    </script>
 @endsection

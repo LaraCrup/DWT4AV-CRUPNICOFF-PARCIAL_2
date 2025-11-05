@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class TortaController extends Controller
 {
     /**
-     * Display a listing of all tortas (Admin)
+     * Display a listing of all resources.
      */
     public function index()
     {
@@ -25,7 +25,8 @@ class TortaController extends Controller
     public function create()
     {
         $categorias = Categoria::all();
-        return view('admin.tortas.create', compact('categorias'));
+        $tamanos = \App\Models\Tamano::all();
+        return view('admin.tortas.create', compact('categorias', 'tamanos'));
     }
 
     /**
@@ -35,21 +36,21 @@ class TortaController extends Controller
     {
         $validated = $request->validate([
             'categoria_id' => 'required|exists:categorias,id',
-            'nombre' => 'required|string|max:255',
+            'nombre' => 'required|string|max:50',
             'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'valoracion' => 'required|numeric|min:1|max:5',
+            'valoracion' => 'required|integer|min:1|max:5',
             'alergenios' => 'nullable|array',
             'descripcion' => 'required|string',
             'tamanos' => 'required|array|min:1',
             'tamanos.*' => 'exists:tamanos,id',
             'precios' => 'required|array',
-            'precios.*' => 'nullable|numeric|min:0'
+            'precios.*' => 'required|numeric|min:0.01'
         ], [
             'categoria_id.required' => 'La categoría es requerida.',
             'categoria_id.exists' => 'La categoría seleccionada no existe.',
             'nombre.required' => 'El nombre del producto es requerido.',
             'nombre.string' => 'El nombre debe ser un texto válido.',
-            'nombre.max' => 'El nombre no puede exceder 255 caracteres.',
+            'nombre.max' => 'El nombre no puede exceder 50 caracteres.',
             'imagen.required' => 'La imagen es requerida.',
             'imagen.image' => 'El archivo debe ser una imagen válida.',
             'imagen.mimes' => 'La imagen debe ser de tipo: jpeg, png, jpg, gif, webp.',
@@ -66,8 +67,9 @@ class TortaController extends Controller
             'tamanos.*.exists' => 'Uno de los tamaños seleccionados no existe.',
             'precios.required' => 'Los precios son requeridos.',
             'precios.array' => 'Los precios deben ser un array.',
+            'precios.*.required' => 'Debe ingresar un precio para cada tamaño seleccionado.',
             'precios.*.numeric' => 'Los precios deben ser números válidos.',
-            'precios.*.min' => 'Los precios no pueden ser negativos.',
+            'precios.*.min' => 'Los precios no pueden ser menores a 0.01.',
         ]);
 
         if ($request->hasFile('imagen')) {
@@ -75,7 +77,6 @@ class TortaController extends Controller
             $validated['imagen'] = basename($path);
         }
 
-        // Convertir alérgenos de array a string separado por comas
         if (!empty($validated['alergenios'])) {
             $validated['alergeno'] = implode(', ', $validated['alergenios']);
         } else {
@@ -83,10 +84,8 @@ class TortaController extends Controller
         }
         unset($validated['alergenios']);
 
-        // Crear la torta
         $torta = Torta::create($validated);
 
-        // Asociar tamaños con precios
         $tamanos = $request->input('tamanos', []);
         $precios = $request->input('precios', []);
 
@@ -116,7 +115,8 @@ class TortaController extends Controller
     {
         $torta = Torta::with('tamanos')->findOrFail($id);
         $categorias = Categoria::all();
-        return view('admin.tortas.edit', compact('torta', 'categorias'));
+        $tamanos = \App\Models\Tamano::all();
+        return view('admin.tortas.edit', compact('torta', 'categorias', 'tamanos'));
     }
 
     /**
@@ -128,21 +128,21 @@ class TortaController extends Controller
 
         $validated = $request->validate([
             'categoria_id' => 'required|exists:categorias,id',
-            'nombre' => 'required|string|max:255',
+            'nombre' => 'required|string|max:50',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'valoracion' => 'required|numeric|min:1|max:5',
+            'valoracion' => 'required|integer|min:1|max:5',
             'alergenios' => 'nullable|array',
             'descripcion' => 'nullable|string',
             'tamanos' => 'required|array|min:1',
             'tamanos.*' => 'exists:tamanos,id',
             'precios' => 'required|array',
-            'precios.*' => 'nullable|numeric|min:0'
+            'precios.*' => 'required|numeric|min:0.01'
         ], [
             'categoria_id.required' => 'La categoría es requerida.',
             'categoria_id.exists' => 'La categoría seleccionada no existe.',
             'nombre.required' => 'El nombre del producto es requerido.',
             'nombre.string' => 'El nombre debe ser un texto válido.',
-            'nombre.max' => 'El nombre no puede exceder 255 caracteres.',
+            'nombre.max' => 'El nombre no puede exceder 50 caracteres.',
             'imagen.image' => 'El archivo debe ser una imagen válida.',
             'imagen.mimes' => 'La imagen debe ser de tipo: jpeg, png, jpg, gif.',
             'imagen.max' => 'La imagen no puede pesar más de 2MB.',
@@ -156,27 +156,19 @@ class TortaController extends Controller
             'tamanos.*.exists' => 'Uno de los tamaños seleccionados no existe.',
             'precios.required' => 'Los precios son requeridos.',
             'precios.array' => 'Los precios deben ser un array.',
+            'precios.*.required' => 'Debe ingresar un precio para cada tamaño seleccionado.',
             'precios.*.numeric' => 'Los precios deben ser números válidos.',
-            'precios.*.min' => 'Los precios no pueden ser negativos.',
+            'precios.*.min' => 'Los precios no pueden ser menores a 0.01.',
         ]);
 
         if ($request->hasFile('imagen')) {
-            // Eliminar imagen anterior si existe
-            if ($torta->imagen) {
-                // Intentar eliminar del directorio 'tortas' primero
-                if (Storage::disk('public')->exists('tortas/' . $torta->imagen)) {
-                    Storage::disk('public')->delete('tortas/' . $torta->imagen);
-                }
-                // Intentar eliminar del directorio 'products' (por compatibilidad)
-                if (Storage::disk('public')->exists('products/' . $torta->imagen)) {
-                    Storage::disk('public')->delete('products/' . $torta->imagen);
-                }
+            if (Storage::disk('public')->exists('products/' . $torta->imagen)) {
+                Storage::disk('public')->delete('products/' . $torta->imagen);
             }
             $path = $request->file('imagen')->store('products', 'public');
             $validated['imagen'] = basename($path);
         }
 
-        // Convertir alérgenos de array a string separado por comas
         if (!empty($validated['alergenios'])) {
             $validated['alergeno'] = implode(', ', $validated['alergenios']);
         } else {
@@ -186,7 +178,6 @@ class TortaController extends Controller
 
         $torta->update($validated);
 
-        // Asociar tamaños con precios
         $tamanos = $request->input('tamanos', []);
         $precios = $request->input('precios', []);
 

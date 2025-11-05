@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tamanos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->decimal('precio_adicional', 10, 2)->default(0);
             $table->timestamps();
         });
     }
