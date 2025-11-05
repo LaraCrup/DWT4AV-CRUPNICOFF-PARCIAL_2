@@ -151,15 +151,15 @@
                     <label for="star5">Calificación</label>
                     <div class="ratingContainer">
                         <div class="rating">
-                            <input type="radio" id="star5" name="calificacion" value="5" {{ old('calificacion', $torta->calificacion) == '5' ? 'checked' : '' }}>
+                            <input type="radio" id="star5" name="calificacion" value="5" {{ old('calificacion', $torta->calificacion) == 5 || old('calificacion', $torta->calificacion) == '5' ? 'checked' : '' }}>
                             <label for="star5">★</label>
-                            <input type="radio" id="star4" name="calificacion" value="4" {{ old('calificacion', $torta->calificacion) == '4' ? 'checked' : '' }}>
+                            <input type="radio" id="star4" name="calificacion" value="4" {{ old('calificacion', $torta->calificacion) == 4 || old('calificacion', $torta->calificacion) == '4' ? 'checked' : '' }}>
                             <label for="star4">★</label>
-                            <input type="radio" id="star3" name="calificacion" value="3" {{ old('calificacion', $torta->calificacion) == '3' ? 'checked' : '' }}>
+                            <input type="radio" id="star3" name="calificacion" value="3" {{ old('calificacion', $torta->calificacion) == 3 || old('calificacion', $torta->calificacion) == '3' ? 'checked' : '' }}>
                             <label for="star3">★</label>
-                            <input type="radio" id="star2" name="calificacion" value="2" {{ old('calificacion', $torta->calificacion) == '2' ? 'checked' : '' }}>
+                            <input type="radio" id="star2" name="calificacion" value="2" {{ old('calificacion', $torta->calificacion) == 2 || old('calificacion', $torta->calificacion) == '2' ? 'checked' : '' }}>
                             <label for="star2">★</label>
-                            <input type="radio" id="star1" name="calificacion" value="1" {{ old('calificacion', $torta->calificacion) == '1' ? 'checked' : '' }}>
+                            <input type="radio" id="star1" name="calificacion" value="1" {{ old('calificacion', $torta->calificacion) == 1 || old('calificacion', $torta->calificacion) == '1' ? 'checked' : '' }}>
                             <label for="star1">★</label>
                         </div>
                     </div>
