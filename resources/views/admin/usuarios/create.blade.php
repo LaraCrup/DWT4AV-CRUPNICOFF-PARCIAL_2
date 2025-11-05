@@ -10,18 +10,18 @@
 
         <div class="formInputs">
             <div class="formGroup">
-                <label for="nombre">Nombre completo</label>
+                <label for="name">Nombre completo</label>
                 <input
                     type="text"
-                    id="nombre"
-                    name="nombre"
+                    id="name"
+                    name="name"
                     required
-                    placeholder="Nombre y apellido"
-                    value="{{ old('nombre') }}"
-                    class="@error('nombre') is-invalid @enderror"
+                    placeholder="Ingresa el nombre completo"
+                    value="{{ old('name') }}"
+                    class="@error('name') is-invalid @enderror"
                 >
-                @error('nombre')
-                    <span class="error-message">{{ $message }}</span>
+                @error('name')
+                    <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -32,12 +32,12 @@
                     id="email"
                     name="email"
                     required
-                    placeholder="ejemplo@correo.com"
+                    placeholder="Ingresa el correo electrónico"
                     value="{{ old('email') }}"
                     class="@error('email') is-invalid @enderror"
                 >
                 @error('email')
-                    <span class="error-message">{{ $message }}</span>
+                    <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -48,11 +48,11 @@
                     id="password"
                     name="password"
                     required
-                    placeholder="Contraseña"
+                    placeholder="Ingresa una contraseña"
                     class="@error('password') is-invalid @enderror"
                 >
                 @error('password')
-                    <span class="error-message">{{ $message }}</span>
+                    <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -63,7 +63,7 @@
                     id="password_confirmation"
                     name="password_confirmation"
                     required
-                    placeholder="Confirmar contraseña"
+                    placeholder="Confirma tu contraseña"
                 >
             </div>
 
@@ -75,12 +75,12 @@
                     required
                     class="@error('rol') is-invalid @enderror"
                 >
-                    <option value="" selected disabled>Seleccionar rol</option>
+                    <option value="" selected disabled>Selecciona un rol</option>
                     <option value="admin" {{ old('rol') === 'admin' ? 'selected' : '' }}>Administrador</option>
                     <option value="usuario" {{ old('rol') === 'usuario' ? 'selected' : '' }}>Usuario regular</option>
                 </select>
                 @error('rol')
-                    <span class="error-message">{{ $message }}</span>
+                    <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
                 @enderror
             </div>
         </div>
@@ -91,4 +91,8 @@
         </div>
     </form>
 </section>
+
+@section('scripts')
+    <script src="/scripts/formValidation.js"></script>
+@endsection
 @endsection

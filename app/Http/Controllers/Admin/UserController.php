@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of all users (Admin)
      */
     public function index()
     {
@@ -22,7 +23,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.usuarios.create');
     }
 
     /**
@@ -30,7 +31,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'rol' => 'required|in:admin,usuario'
+        ]);
+
+        // Hash the password
+        $validated['password'] = Hash::make($validated['password']);
+
+        // Map rol string to rol_id (admin=1, usuario=2)
+        $validated['rol_id'] = ($validated['rol'] === 'admin') ? 1 : 2;
+
+        // Remove the rol field from validated data
+        unset($validated['rol']);
+
+        User::create($validated);
+
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario creado exitosamente');
     }
 
     /**
@@ -38,7 +57,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $usuario = User::findOrFail($id);
+        return view('admin.usuarios.show', compact('usuario'));
     }
 
     /**
@@ -46,7 +66,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $usuario = User::findOrFail($id);
+        return view('admin.usuarios.edit', compact('usuario'));
     }
 
     /**
@@ -54,7 +75,31 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $usuario = User::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'rol' => 'required|in:admin,usuario'
+        ]);
+
+        // Only hash password if provided
+        if ($validated['password']) {
+            $validated['password'] = Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
+
+        // Map rol string to rol_id (admin=1, usuario=2)
+        $validated['rol_id'] = ($validated['rol'] === 'admin') ? 1 : 2;
+
+        // Remove the rol field from validated data
+        unset($validated['rol']);
+
+        $usuario->update($validated);
+
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario actualizado exitosamente');
     }
 
     /**
@@ -62,6 +107,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $usuario = User::findOrFail($id);
+        $usuario->delete();
+
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario eliminado exitosamente');
     }
 }

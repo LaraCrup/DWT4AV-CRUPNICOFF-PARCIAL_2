@@ -11,18 +11,18 @@
 
         <div class="formInputs">
             <div class="formGroup">
-                <label for="nombre">Nombre completo</label>
+                <label for="name">Nombre completo</label>
                 <input
                     type="text"
-                    id="nombre"
-                    name="nombre"
+                    id="name"
+                    name="name"
                     required
                     placeholder="Nombre y apellido"
-                    value="{{ old('nombre', $usuario->nombre) }}"
-                    class="@error('nombre') is-invalid @enderror"
+                    value="{{ old('name', $usuario->name) }}"
+                    class="@error('name') is-invalid @enderror"
                 >
-                @error('nombre')
-                    <span class="error-message">{{ $message }}</span>
+                @error('name')
+                    <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -38,7 +38,7 @@
                     class="@error('email') is-invalid @enderror"
                 >
                 @error('email')
-                    <span class="error-message">{{ $message }}</span>
+                    <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -51,9 +51,8 @@
                     placeholder="Dejar en blanco para mantener la actual"
                     class="@error('password') is-invalid @enderror"
                 >
-                <small class="helperText">Deja este campo en blanco si no deseas cambiar la contraseña.</small>
                 @error('password')
-                    <span class="error-message">{{ $message }}</span>
+                    <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -63,7 +62,7 @@
                     type="password"
                     id="password_confirmation"
                     name="password_confirmation"
-                    placeholder="Confirmar contraseña"
+                    placeholder="Confirma tu contraseña"
                 >
             </div>
 
@@ -75,12 +74,12 @@
                     required
                     class="@error('rol') is-invalid @enderror"
                 >
-                    <option value="" disabled>Seleccionar rol</option>
-                    <option value="admin" {{ old('rol', $usuario->rol) === 'admin' ? 'selected' : '' }}>Administrador</option>
-                    <option value="usuario" {{ old('rol', $usuario->rol) === 'usuario' ? 'selected' : '' }}>Usuario regular</option>
+                    <option value="" disabled>Selecciona un rol</option>
+                    <option value="admin" {{ old('rol', $usuario->rol_id === 1 ? 'admin' : 'usuario') === 'admin' ? 'selected' : '' }}>Administrador</option>
+                    <option value="usuario" {{ old('rol', $usuario->rol_id === 2 ? 'usuario' : 'admin') === 'usuario' ? 'selected' : '' }}>Usuario regular</option>
                 </select>
                 @error('rol')
-                    <span class="error-message">{{ $message }}</span>
+                    <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -89,7 +88,7 @@
                 <div class="infoGroup fontBody">
                     <p><strong>ID de usuario:</strong> {{ $usuario->id }}</p>
                     <p><strong>Fecha de registro:</strong> {{ $usuario->created_at->format('d/m/Y') }}</p>
-                    <p><strong>Compras realizadas:</strong> {{ $usuario->cantidad_compras ?? 0 }}</p>
+                    <p><strong>Compras realizadas:</strong> {{ $usuario->compras()->count() }}</p>
                 </div>
             </div>
         </div>
@@ -100,4 +99,8 @@
         </div>
     </form>
 </section>
+
+@section('scripts')
+    <script src="/scripts/formValidation.js"></script>
+@endsection
 @endsection

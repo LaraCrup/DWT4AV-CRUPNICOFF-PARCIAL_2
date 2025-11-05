@@ -13,15 +13,10 @@
     </a>
     <div class="profileCard">
         <h2 class="fontTitle">Datos personales</h2>
-        <img src="/images/shared/profile.png" alt="Foto de perfil" class="profilePic">
         <div class="profileInfo fontBody">
-            <p><strong>Nombre:</strong> {{ $usuario->nombre }}</p>
+            <p><strong>Nombre:</strong> {{ $usuario->name }}</p>
             <p><strong>Email:</strong> {{ $usuario->email }}</p>
             <p><strong>Fecha de registro:</strong> {{ $usuario->created_at->format('d/m/Y') }}</p>
-            <p>
-                <strong>Estado de la cuenta:</strong>
-                <span class="activeStatus">Activa</span>
-            </p>
         </div>
     </div>
 </section>
@@ -46,20 +41,12 @@
                 <tr>
                     <td>#{{ $compra->id }}</td>
                     <td>{{ $compra->created_at->format('d/m/Y') }}</td>
-                    <td>{{ $compra->producto->nombre ?? 'N/A' }}</td>
-                    <td>{{ $compra->tamaño ?? 'N/A' }}</td>
-                    <td>{{ $compra->cantidad }}</td>
-                    <td>${{ number_format($compra->total, 0, ',', '.') }}</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>${{ number_format($compra->total ?? 0, 0, ',', '.') }}</td>
                     <td>
-                        @if($compra->estado === 'entregado')
-                            <span class="statusDelivered">Entregado</span>
-                        @elseif($compra->estado === 'pendiente')
-                            <span class="statusPending">Pendiente</span>
-                        @elseif($compra->estado === 'cancelado')
-                            <span class="statusCanceled">Cancelado</span>
-                        @else
-                            <span class="statusPending">{{ ucfirst($compra->estado) }}</span>
-                        @endif
+                        <span class="statusPending">Compra registrada</span>
                     </td>
                 </tr>
                 @empty
