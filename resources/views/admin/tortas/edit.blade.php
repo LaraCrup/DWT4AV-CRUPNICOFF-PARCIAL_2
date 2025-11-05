@@ -3,18 +3,21 @@
 @section('pageTitle', 'Editar Producto')
 
 @section('content')
-    <section class="relative">
-        <div class="sectionHeader">
-            <h1 class="fontTitle">Editar producto</h1>
-            <a href="{{ route('admin.tortas.index') }}" class="goBack fontBody">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                    <path fill="#f8f7ff" d="m7.85 13l2.85 2.85q.3.3.288.7t-.288.7q-.3.3-.712.313t-.713-.288L4.7 12.7q-.3-.3-.3-.7t.3-.7l4.575-4.575q.3-.3.713-.287t.712.312q.275.3.288.7t-.288.7L7.85 11H19q.425 0 .713.288T20 12t-.288.713T19 13z"/>
-                </svg>
-                Volver a productos
-            </a>
-        </div>
+    <section>
+        <h1 class="fontTitle">Editar producto</h1>
 
-        <form class="formContainer fontBody" action="{{ route('admin.tortas.update', $torta->id) }}" method="post" enctype="multipart/form-data" id="editProductForm">
+        @if ($errors->any())
+            <div class="alertError fontBody" style="background-color: #fee; border: 1px solid #fcc; border-radius: 4px; padding: 1rem; margin-bottom: 1rem; color: #c33;">
+                <h3 style="margin: 0 0 0.5rem 0; color: #c33;">Errores en el formulario:</h3>
+                <ul style="margin: 0; padding-left: 1.5rem;">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form class="formContainer fontBody" action="{{ route('admin.tortas.update', $torta->id) }}" method="post" enctype="multipart/form-data" id="editProductForm" novalidate>
             @csrf
             @method('PUT')
             <div class="formInputs">
@@ -29,7 +32,7 @@
                 <div class="formGroup">
                     <label for="categoria_id">Categoría</label>
                     <select id="categoria_id" name="categoria_id" required>
-                        <option value="" disabled>Seleccionar categoría</option>
+                        <option value="" selected disabled>Seleccionar categoría</option>
                         @foreach($categorias ?? [] as $categoria)
                             <option value="{{ $categoria->id }}" {{ old('categoria_id', $torta->categoria_id) == $categoria->id ? 'selected' : '' }}>
                                 {{ $categoria->nombre }}
@@ -46,39 +49,44 @@
                     <div class="sizeGroup fontBody">
                         <div class="sizeHeader">
                             <span>Tamaño</span>
-                            <span>Porciones</span>
                             <span>Precio</span>
                         </div>
                         @php
-                            $tamanios = $torta->tamanios ?? [];
-                            $tamaniosMap = [];
-                            foreach($tamanios as $tm) {
-                                $tamaniosMap[$tm['nombre']] = $tm;
+                            $tamanosPreciosMap = [];
+                            foreach ($torta->tamanos as $tam) {
+                                $tamanosPreciosMap[$tam->id] = $tam->pivot->precio;
                             }
-                            $sizes = ['Grande', 'Mediana', 'Chica', 'Porción'];
                         @endphp
-                        @foreach($sizes as $index => $size)
-                            @php
-                                $tamanio = $tamaniosMap[$size] ?? null;
-                                $isChecked = isset($tamanio);
-                                $porciones = old("tamanios_porciones.$index", $tamanio['porciones'] ?? '');
-                                $precio = old("tamanios_precios.$index", $tamanio['precio'] ?? '');
-                            @endphp
-                            <div class="sizeRow">
-                                <div class="checkboxItem">
-                                    <input type="checkbox" id="size{{ ucfirst(strtolower($size)) }}" name="tamanios_nombres[]" value="{{ $size }}" {{ $isChecked || in_array($size, old('tamanios_nombres', [])) ? 'checked' : '' }}>
-                                    <label for="size{{ ucfirst(strtolower($size)) }}">{{ $size }}</label>
-                                </div>
-                                @if($size === 'Porción')
-                                    <input type="number" name="tamanios_porciones[]" placeholder="N° porciones" min="1" value="{{ $porciones }}" readonly>
-                                @else
-                                    <input type="number" name="tamanios_porciones[]" placeholder="N° porciones" min="1" value="{{ $porciones }}">
-                                @endif
-                                <input type="number" name="tamanios_precios[]" placeholder="Precio" min="0" step="0.01" value="{{ $precio }}">
+                        <div class="sizeRow">
+                            <div class="checkboxItem">
+                                <input type="checkbox" id="sizePorcion" name="tamanos[]" value="1" {{ in_array('1', old('tamanos', array_keys($tamanosPreciosMap))) ? 'checked' : '' }}>
+                                <label for="sizePorcion">Porción</label>
                             </div>
-                        @endforeach
+                            <input type="number" name="precios[1]" placeholder="Precio" min="0" step="0.01" value="{{ old('precios.1', isset($tamanosPreciosMap[1]) ? (float)$tamanosPreciosMap[1] : '') }}" class="tamano-precio">
+                        </div>
+                        <div class="sizeRow">
+                            <div class="checkboxItem">
+                                <input type="checkbox" id="sizeChica" name="tamanos[]" value="2" {{ in_array('2', old('tamanos', array_keys($tamanosPreciosMap))) ? 'checked' : '' }}>
+                                <label for="sizeChica">Chica</label>
+                            </div>
+                            <input type="number" name="precios[2]" placeholder="Precio" min="0" step="0.01" value="{{ old('precios.2', isset($tamanosPreciosMap[2]) ? (float)$tamanosPreciosMap[2] : '') }}" class="tamano-precio">
+                        </div>
+                        <div class="sizeRow">
+                            <div class="checkboxItem">
+                                <input type="checkbox" id="sizeMediana" name="tamanos[]" value="3" {{ in_array('3', old('tamanos', array_keys($tamanosPreciosMap))) ? 'checked' : '' }}>
+                                <label for="sizeMediana">Mediana</label>
+                            </div>
+                            <input type="number" name="precios[3]" placeholder="Precio" min="0" step="0.01" value="{{ old('precios.3', isset($tamanosPreciosMap[3]) ? (float)$tamanosPreciosMap[3] : '') }}" class="tamano-precio">
+                        </div>
+                        <div class="sizeRow">
+                            <div class="checkboxItem">
+                                <input type="checkbox" id="sizeGrande" name="tamanos[]" value="4" {{ in_array('4', old('tamanos', array_keys($tamanosPreciosMap))) ? 'checked' : '' }}>
+                                <label for="sizeGrande">Grande</label>
+                            </div>
+                            <input type="number" name="precios[4]" placeholder="Precio" min="0" step="0.01" value="{{ old('precios.4', isset($tamanosPreciosMap[4]) ? (float)$tamanosPreciosMap[4] : '') }}" class="tamano-precio">
+                        </div>
                     </div>
-                    @error('tamanios_nombres')
+                    @error('tamanos')
                         <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
@@ -101,7 +109,10 @@
                     @if($torta->imagen ?? false)
                         <div class="currentImage fontLight">
                             <p><strong>Imagen actual:</strong></p>
-                            <img src="{{ $torta->imagen }}" alt="{{ $torta->nombre }}" width="100">
+                            @php
+                                $imagenPath = str_starts_with($torta->imagen, 'storage/') ? '/' . $torta->imagen : '/storage/products/' . basename($torta->imagen);
+                            @endphp
+                            <img src="{{ $imagenPath }}" alt="{{ $torta->nombre }}" width="100">
                         </div>
                     @endif
                     @error('imagen')
@@ -113,9 +124,9 @@
                     <label>Alérgenos</label>
                     <div class="checkboxGroup">
                         @php
-                            $alergenios = $torta->alergenios ?? [];
-                            if (is_string($alergenios)) {
-                                $alergenios = array_map('trim', explode(',', $alergenios));
+                            $alergenios = [];
+                            if ($torta->alergeno) {
+                                $alergenios = array_map('trim', explode(',', $torta->alergeno));
                             }
                             $allergenOptions = ['Gluten', 'Lácteos', 'Huevo', 'Frutos secos', 'Colorantes'];
                         @endphp
@@ -129,13 +140,27 @@
                 </div>
 
                 <div class="formGroup">
-                    <label for="star5">Popularidad</label>
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" placeholder="Descripción del producto" rows="4">{{ old('descripcion', $torta->descripcion) }}</textarea>
+                    @error('descripcion')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="formGroup">
+                    <label for="star5">Calificación</label>
                     <div class="ratingContainer">
                         <div class="rating">
-                            @for($i = 5; $i >= 1; $i--)
-                                <input type="radio" id="star{{ $i }}" name="calificacion" value="{{ $i }}" {{ old('calificacion', $torta->calificacion) == $i ? 'checked' : '' }}>
-                                <label for="star{{ $i }}">★</label>
-                            @endfor
+                            <input type="radio" id="star5" name="calificacion" value="5" {{ old('calificacion', $torta->calificacion) == '5' ? 'checked' : '' }}>
+                            <label for="star5">★</label>
+                            <input type="radio" id="star4" name="calificacion" value="4" {{ old('calificacion', $torta->calificacion) == '4' ? 'checked' : '' }}>
+                            <label for="star4">★</label>
+                            <input type="radio" id="star3" name="calificacion" value="3" {{ old('calificacion', $torta->calificacion) == '3' ? 'checked' : '' }}>
+                            <label for="star3">★</label>
+                            <input type="radio" id="star2" name="calificacion" value="2" {{ old('calificacion', $torta->calificacion) == '2' ? 'checked' : '' }}>
+                            <label for="star2">★</label>
+                            <input type="radio" id="star1" name="calificacion" value="1" {{ old('calificacion', $torta->calificacion) == '1' ? 'checked' : '' }}>
+                            <label for="star1">★</label>
                         </div>
                     </div>
                 </div>
@@ -173,19 +198,20 @@
             document.getElementById('selectedFileName').textContent = fileName;
         });
 
-        // Habilitar/deshabilitar campos según checkbox
-        const checkboxes = document.querySelectorAll('input[name="tamanios_nombres[]"]');
-        const porcionesInputs = document.querySelectorAll('input[name="tamanios_porciones[]"]');
-        const preciosInputs = document.querySelectorAll('input[name="tamanios_precios[]"]');
+        // Habilitar/deshabilitar campos según checkbox de tamaños
+        const checkboxes = document.querySelectorAll('input[name="tamanos[]"]');
+        const preciosInputs = document.querySelectorAll('.tamano-precio');
 
         checkboxes.forEach((checkbox, index) => {
+            const precioInput = preciosInputs[index];
             checkbox.addEventListener('change', function() {
-                porcionesInputs[index].disabled = !this.checked;
-                preciosInputs[index].disabled = !this.checked;
+                precioInput.disabled = !this.checked;
+                if (!this.checked) {
+                    precioInput.value = '';
+                }
             });
             // Inicializar estado
-            porcionesInputs[index].disabled = !checkbox.checked;
-            preciosInputs[index].disabled = !checkbox.checked;
+            precioInput.disabled = !checkbox.checked;
         });
 
         // Validación personalizada del formulario
@@ -229,7 +255,7 @@
             // Validar que al menos un tamaño esté seleccionado
             const tamanosSeleccionados = Array.from(checkboxes).some(cb => cb.checked);
             if (!tamanosSeleccionados) {
-                const tamanosGroup = document.querySelector('input[name="tamanios_nombres[]"]').closest('.formGroup');
+                const tamanosGroup = document.querySelector('input[name="tamanos[]"]').closest('.formGroup');
                 const errorSpan = document.createElement('span');
                 errorSpan.className = 'error';
                 errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem; display: block; margin-top: 0.5rem;';
@@ -246,7 +272,7 @@
                 }
             });
             if (preciosFaltantes) {
-                const tamanosGroup = document.querySelector('input[name="tamanios_nombres[]"]').closest('.formGroup');
+                const tamanosGroup = document.querySelector('input[name="tamanos[]"]').closest('.formGroup');
                 if (!tamanosGroup.querySelector('.error-precios')) {
                     const errorSpan = document.createElement('span');
                     errorSpan.className = 'error error-precios';
@@ -264,7 +290,7 @@
                 const errorSpan = document.createElement('span');
                 errorSpan.className = 'error';
                 errorSpan.style.cssText = 'color: #dc3545; font-size: 0.875rem; display: block; margin-top: 0.5rem;';
-                errorSpan.textContent = 'Debe seleccionar una popularidad';
+                errorSpan.textContent = 'Debe seleccionar una calificación';
                 calificacionGroup.appendChild(errorSpan);
                 hasErrors = true;
             }

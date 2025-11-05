@@ -106,8 +106,12 @@ class TortaController extends Controller
             'nombre' => 'required|string|max:255',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'calificacion' => 'required|numeric|min:1|max:5',
-            'alergeno' => 'nullable|string',
-            'descripcion' => 'nullable|string'
+            'alergenios' => 'nullable|array',
+            'descripcion' => 'nullable|string',
+            'tamanos' => 'required|array|min:1',
+            'tamanos.*' => 'exists:tamanos,id',
+            'precios' => 'required|array',
+            'precios.*' => 'nullable|numeric|min:0'
         ]);
 
         if ($request->hasFile('imagen')) {
@@ -115,7 +119,28 @@ class TortaController extends Controller
             $validated['imagen'] = $path;
         }
 
+        // Convertir alérgenos de array a string separado por comas
+        if (!empty($validated['alergenios'])) {
+            $validated['alergeno'] = implode(', ', $validated['alergenios']);
+        } else {
+            $validated['alergeno'] = null;
+        }
+        unset($validated['alergenios']);
+
         $torta->update($validated);
+
+        // Asociar tamaños con precios
+        $tamanos = $request->input('tamanos', []);
+        $precios = $request->input('precios', []);
+
+        $tamanoData = [];
+        foreach ($tamanos as $tamanoId) {
+            $precio = $precios[$tamanoId] ?? 0;
+            if ($precio > 0) {
+                $tamanoData[$tamanoId] = ['precio' => $precio];
+            }
+        }
+        $torta->tamanos()->sync($tamanoData);
 
         return redirect()->route('admin.tortas.index')->with('success', 'Torta actualizada exitosamente');
     }
