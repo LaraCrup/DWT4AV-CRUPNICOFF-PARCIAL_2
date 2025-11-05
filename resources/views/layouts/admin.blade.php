@@ -21,14 +21,13 @@
             </svg>
         </button>
         <div>
-            <img src="../images/shared/logo.png" alt="Logo Tortas Manuela" class="logoHeader">
+            <img src="/storage/shared/logo.png" alt="Logo Tortas Manuela" class="logoHeader">
         </div>
         <nav class="navDesktop">
             <ul class="fontBody">
                 <li><a href="{{ route('admin.dashboard') }}">Inicio</a></li>
-                <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
+                <li><a href="{{ route('admin.tortas.index') }}">Productos</a></li>
                 <li><a href="{{ route('admin.categorias.index') }}">Categorias</a></li>
-                <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
             </ul>
             <div class="btnNav fontBody">
                 <a href="{{ route('logout') }}" class="btn btnPrimary">Cerrar Sesión</a>
@@ -44,9 +43,8 @@
             <nav class="navMobile">
                 <ul class="fontBody">
                     <li><a href="{{ route('admin.dashboard') }}">Inicio</a></li>
-                    <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
+                    <li><a href="{{ route('admin.tortas.index') }}">Productos</a></li>
                     <li><a href="{{ route('admin.categorias.index') }}">Categorias</a></li>
-                    <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
                 </ul>
                 <div class="btnNav fontBody">
                     <a href="{{ route('logout') }}" class="btn btnPrimary">Cerrar Sesión</a>
@@ -71,9 +69,8 @@
         <div class="navFooter">
             <ul class="fontBody">
                 <li><a href="{{ route('admin.dashboard') }}">Inicio</a></li>
-                <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
+                <li><a href="{{ route('admin.tortas.index') }}">Productos</a></li>
                 <li><a href="{{ route('admin.categorias.index') }}">Categorias</a></li>
-                <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
             </ul>
         </div>
     </footer>

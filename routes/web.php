@@ -5,7 +5,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TortaController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\TortaController as AdminTortaController;
 use App\Http\Controllers\Admin\CategoriaController as AdminCategoriaController;
 
@@ -60,9 +59,10 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register.store');
 });
 
-// Ruta de admin login
-Route::get('/admin/login', [LoginController::class, 'show'])->name('admin.login');
-Route::post('/admin/login', [LoginController::class, 'store'])->name('admin.login.store');
+// Ruta de admin login redirige al login único
+Route::get('/admin/login', function () {
+    return redirect()->route('login');
+})->name('admin.login');
 
 // Rutas de Tortas (Catálogo - Público)
 Route::prefix('tortas')->group(function () {
@@ -70,8 +70,8 @@ Route::prefix('tortas')->group(function () {
     Route::get('/{id}', [TortaController::class, 'show'])->name('tortas.show');
 });
 
-// Rutas de Admin
-Route::prefix('admin')->name('admin.')->group(function () {
+// Rutas de Admin (Protegidas - Solo para Admin)
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     // Admin - Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

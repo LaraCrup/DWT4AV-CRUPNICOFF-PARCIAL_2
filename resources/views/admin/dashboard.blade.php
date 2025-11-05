@@ -26,7 +26,7 @@
                 <ul class="topUsersList fontBody">
                     @forelse($topUsers ?? [] as $user)
                         <li class="topUser{{ $loop->index >= 5 ? ' desktop-only' : '' }}">
-                            <img src="../images/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
+                            <img src="/storage/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
                             <div class="userData">
                                 <p class="userName{{ $loop->index >= 5 ? ' fontBody' : '' }}">{{ $user['name'] }}</p>
                                 <p class="userSpent">{{ $user['amount'] }}</p>
@@ -34,70 +34,70 @@
                         </li>
                     @empty
                         <li class="topUser">
-                            <img src="../images/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
+                            <img src="/storage/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
                             <div class="userData">
                                 <p class="userName">Ana García</p>
                                 <p class="userSpent">$5,320</p>
                             </div>
                         </li>
                         <li class="topUser">
-                            <img src="../images/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
+                            <img src="/storage/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
                             <div class="userData">
                                 <p class="userName">Martín López</p>
                                 <p class="userSpent">$4,780</p>
                             </div>
                         </li>
                         <li class="topUser">
-                            <img src="../images/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
+                            <img src="/storage/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
                             <div class="userData">
                                 <p class="userName">Carolina Méndez</p>
                                 <p class="userSpent">$3,950</p>
                             </div>
                         </li>
                         <li class="topUser">
-                            <img src="../images/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
+                            <img src="/storage/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
                             <div class="userData">
                                 <p class="userName">Pablo Rodríguez</p>
                                 <p class="userSpent">$3,210</p>
                             </div>
                         </li>
                         <li class="topUser">
-                            <img src="../images/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
+                            <img src="/storage/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
                             <div class="userData">
                                 <p class="userName">Valentina Torres</p>
                                 <p class="userSpent">$2,890</p>
                             </div>
                         </li>
                         <li class="topUser desktop-only">
-                            <img src="../images/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
+                            <img src="/storage/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
                             <div class="userData">
                                 <p class="userName fontBody">Luciano Pereyra</p>
                                 <p class="userSpent">$2,650</p>
                             </div>
                         </li>
                         <li class="topUser desktop-only">
-                            <img src="../images/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
+                            <img src="/storage/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
                             <div class="userData">
                                 <p class="userName fontBody">Florencia Gómez</p>
                                 <p class="userSpent">$2,480</p>
                             </div>
                         </li>
                         <li class="topUser desktop-only">
-                            <img src="../images/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
+                            <img src="/storage/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
                             <div class="userData">
                                 <p class="userName fontBody">Sebastián Ortiz</p>
                                 <p class="userSpent">$2,320</p>
                             </div>
                         </li>
                         <li class="topUser desktop-only">
-                            <img src="../images/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
+                            <img src="/storage/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
                             <div class="userData">
                                 <p class="userName fontBody">Camila Fernández</p>
                                 <p class="userSpent">$2,150</p>
                             </div>
                         </li>
                         <li class="topUser desktop-only">
-                            <img src="../images/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
+                            <img src="/storage/shared/profile.png" alt="Imágen de Perfil" class="userAvatar">
                             <div class="userData">
                                 <p class="userName fontBody">Nicolás Ramírez</p>
                                 <p class="userSpent">$1,980</p>
@@ -112,7 +112,7 @@
                 <ul class="productRankingList fontBody">
                     @forelse($topProducts ?? [] as $product)
                         <li class="productItem">
-                            <img src="{{ $product['image'] ?? '../images/products/chocolate.webp' }}" alt="{{ $product['name'] }}">
+                            <img src="{{ $product['image'] ?? '/storage/products/chocolate.webp' }}" alt="{{ $product['name'] }}">
                             <div>
                                 <span class="productName">{{ $product['name'] }}</span>
                                 <span class="productSales">{{ $product['sales'] ?? '0 unidades' }}</span>
@@ -120,28 +120,28 @@
                         </li>
                     @empty
                         <li class="productItem">
-                            <img src="../images/products/chocolate.webp" alt="Torta de Chocolate">
+                            <img src="/storage/products/chocolate.webp" alt="Torta de Chocolate">
                             <div>
                                 <span class="productName">Torta de Chocolate</span>
                                 <span class="productSales">342 unidades</span>
                             </div>
                         </li>
                         <li class="productItem">
-                            <img src="../images/products/cheesecake.webp" alt="Cheesecake Frutos Rojos">
+                            <img src="/storage/products/cheesecake.webp" alt="Cheesecake Frutos Rojos">
                             <div>
                                 <span class="productName">Cheesecake Frutos Rojos</span>
                                 <span class="productSales">287 unidades</span>
                             </div>
                         </li>
                         <li class="productItem">
-                            <img src="../images/products/chocotorta.webp" alt="Chocotorta">
+                            <img src="/storage/products/chocotorta.webp" alt="Chocotorta">
                             <div>
                                 <span class="productName">Chocotorta</span>
                                 <span class="productSales">213 unidades</span>
                             </div>
                         </li>
                         <li class="productItem">
-                            <img src="../images/products/red-velvet.webp" alt="Red Velvet">
+                            <img src="/storage/products/red-velvet.webp" alt="Red Velvet">
                             <div>
                                 <span class="productName">Red Velvet</span>
                                 <span class="productSales">185 unidades</span>

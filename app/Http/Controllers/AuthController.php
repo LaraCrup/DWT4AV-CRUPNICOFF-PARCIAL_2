@@ -39,8 +39,19 @@ class AuthController extends Controller
             // Regenerar sesión para evitar session fixation
             $request->session()->regenerate();
 
-            return redirect()->route('home')
-                ->with('success', 'Sesión iniciada correctamente');
+            // Obtener el usuario autenticado
+            $user = Auth::user();
+
+            // Redirigir según el rol_id
+            if ($user->rol_id == 1) {
+                // Rol de Admin
+                return redirect()->route('admin.dashboard')
+                    ->with('success', 'Sesión iniciada correctamente');
+            } else {
+                // Rol de usuario normal
+                return redirect()->route('home')
+                    ->with('success', 'Sesión iniciada correctamente');
+            }
         }
 
         // Si fallan las credenciales
