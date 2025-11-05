@@ -64,6 +64,7 @@ h1 {
 
 .btn {
     width: fit-content;
+    height: fit-content;
     border-radius: 99px;
     font-family: "Nunito Sans", sans-serif;
     text-decoration: none;

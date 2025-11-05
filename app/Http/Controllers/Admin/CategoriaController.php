@@ -79,6 +79,12 @@ class CategoriaController extends Controller
     public function destroy(string $id)
     {
         $categoria = Categoria::findOrFail($id);
+
+        // Verificar si tiene productos asociados
+        if ($categoria->tortas()->count() > 0) {
+            return redirect()->route('admin.categorias.show', $id)->with('error', 'No se puede eliminar una categoría que tiene productos asociados. Por favor, elimina los productos primero.');
+        }
+
         $categoria->delete();
 
         return redirect()->route('admin.categorias.index')->with('success', 'Categoría eliminada exitosamente');

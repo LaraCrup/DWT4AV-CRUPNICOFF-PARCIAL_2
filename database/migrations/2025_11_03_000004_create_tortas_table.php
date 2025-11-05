@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tortas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('categoria_id')->constrained('categorias')->onDelete('cascade');
+            $table->foreignId('categoria_id')->constrained('categorias')->onDelete('restrict');
             $table->string('nombre');
             $table->string('imagen')->nullable();
             $table->decimal('valoracion', 2, 1)->nullable();

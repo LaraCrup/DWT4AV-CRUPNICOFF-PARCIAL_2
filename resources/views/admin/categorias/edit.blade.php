@@ -18,23 +18,6 @@
                 </div>
 
                 <div class="formGroup">
-                    <label>Visibilidad</label>
-                    <div class="radioGroup">
-                        <div class="radioItem">
-                            <input type="radio" id="activa" name="activa" value="1" {{ old('activa', $categoria->activa ?? 1) == 1 ? 'checked' : '' }}>
-                            <label for="activa">Activa</label>
-                        </div>
-                        <div class="radioItem">
-                            <input type="radio" id="inactiva" name="activa" value="0" {{ old('activa', $categoria->activa ?? 1) == 0 ? 'checked' : '' }}>
-                            <label for="inactiva">Oculta</label>
-                        </div>
-                    </div>
-                    @error('activa')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
-                </div>
-                
-                <div class="formGroup">
                     <label>Información adicional</label>
                     <div class="infoGroup fontBody">
                         <p><strong>ID de categoría:</strong> {{ $categoria->id }}</p>
