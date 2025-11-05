@@ -67,18 +67,18 @@
             </div>
 
             <div class="formGroup">
-                <label for="rol">Rol de usuario</label>
+                <label for="rol_id">Rol de usuario</label>
                 <select
-                    id="rol"
-                    name="rol"
+                    id="rol_id"
+                    name="rol_id"
                     required
-                    class="@error('rol') is-invalid @enderror"
+                    class="@error('rol_id') is-invalid @enderror"
                 >
                     <option value="" disabled>Selecciona un rol</option>
-                    <option value="admin" {{ old('rol', $usuario->rol_id === 1 ? 'admin' : 'usuario') === 'admin' ? 'selected' : '' }}>Administrador</option>
-                    <option value="usuario" {{ old('rol', $usuario->rol_id === 2 ? 'usuario' : 'admin') === 'usuario' ? 'selected' : '' }}>Usuario regular</option>
+                    <option value="1" {{ old('rol_id', $usuario->rol_id) == 1 ? 'selected' : '' }}>Administrador</option>
+                    <option value="2" {{ old('rol_id', $usuario->rol_id) == 2 ? 'selected' : '' }}>Usuario regular</option>
                 </select>
-                @error('rol')
+                @error('rol_id')
                     <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
                 @enderror
             </div>

@@ -132,7 +132,7 @@ Object.assign(Validator, {
     },
     
     validateUserRole: function(role) {
-        return role && (role === 'admin' || role === 'user');
+        return role && (role === 'admin' || role === 'usuario');
     }
 });
 
@@ -328,102 +328,120 @@ function validateProductEditForm(event) {
 function validateUserForm(event) {
     event.preventDefault();
     let isValid = true;
-    
-    const nameInput = document.getElementById('userName');
-    const emailInput = document.getElementById('userEmail');
-    const passwordInput = document.getElementById('userPassword');
-    const passwordConfirmInput = document.getElementById('userPasswordConfirm');
-    const roleInput = document.getElementById('userRole');
-    
+
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const passwordConfirmInput = document.getElementById('password_confirmation');
+    const roleInput = document.getElementById('rol_id');
+
     if (!Validator.validateUserName(nameInput.value)) {
         Validator.showError(nameInput, 'El nombre debe tener al menos 3 caracteres');
         isValid = false;
     } else {
         Validator.removeError(nameInput);
     }
-    
+
     if (!Validator.validateUserEmail(emailInput.value)) {
         Validator.showError(emailInput, 'Ingresa un email válido');
         isValid = false;
     } else {
         Validator.removeError(emailInput);
     }
-    
-    if (!Validator.validateUserPassword(passwordInput.value)) {
+
+    if (!passwordInput.value) {
+        Validator.showError(passwordInput, 'Debes ingresar una contraseña');
+        isValid = false;
+    } else if (!Validator.validateUserPassword(passwordInput.value)) {
         Validator.showError(passwordInput, 'La contraseña debe tener al menos 6 caracteres, una letra y un número');
         isValid = false;
     } else {
         Validator.removeError(passwordInput);
     }
-    
-    if (passwordInput.value !== passwordConfirmInput.value) {
+
+    if (!passwordConfirmInput.value) {
+        Validator.showError(passwordConfirmInput, 'Debes confirmar la contraseña');
+        isValid = false;
+    } else if (passwordInput.value !== passwordConfirmInput.value) {
         Validator.showError(passwordConfirmInput, 'Las contraseñas no coinciden');
         isValid = false;
-    } else if (passwordInput.value) {
+    } else {
         Validator.removeError(passwordConfirmInput);
     }
-    
-    if (!Validator.validateUserRole(roleInput.value)) {
+
+    if (!roleInput.value || (roleInput.value !== '1' && roleInput.value !== '2')) {
         Validator.showError(roleInput, 'Selecciona un rol válido');
         isValid = false;
     } else {
         Validator.removeError(roleInput);
     }
-    
+
     if (isValid) {
-        window.location.href = '/admin/usuarios';
+        event.target.submit();
     }
 }
 
 function validateUserEditForm(event) {
     event.preventDefault();
     let isValid = true;
-    
-    const nameInput = document.getElementById('userName');
-    const emailInput = document.getElementById('userEmail');
-    const passwordInput = document.getElementById('userPassword');
-    const passwordConfirmInput = document.getElementById('userPasswordConfirm');
-    const roleInput = document.getElementById('userRole');
-    
+
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const passwordConfirmInput = document.getElementById('password_confirmation');
+    const roleInput = document.getElementById('rol_id');
+
     if (!Validator.validateUserName(nameInput.value)) {
         Validator.showError(nameInput, 'El nombre debe tener al menos 3 caracteres');
         isValid = false;
     } else {
         Validator.removeError(nameInput);
     }
-    
+
     if (!Validator.validateUserEmail(emailInput.value)) {
         Validator.showError(emailInput, 'Ingresa un email válido');
         isValid = false;
     } else {
         Validator.removeError(emailInput);
     }
-    
-    if (passwordInput.value) {
-        if (!Validator.validateUserPassword(passwordInput.value)) {
+
+    // Only validate password if one of the two fields has a value
+    if (passwordInput.value || passwordConfirmInput.value) {
+        // Both fields must be filled if any is filled
+        if (!passwordInput.value) {
+            Validator.showError(passwordInput, 'Debes ingresar una contraseña');
+            isValid = false;
+        } else if (!Validator.validateUserPassword(passwordInput.value)) {
             Validator.showError(passwordInput, 'La contraseña debe tener al menos 6 caracteres, una letra y un número');
             isValid = false;
         } else {
             Validator.removeError(passwordInput);
         }
-        
-        if (passwordInput.value !== passwordConfirmInput.value) {
+
+        if (!passwordConfirmInput.value) {
+            Validator.showError(passwordConfirmInput, 'Debes confirmar la contraseña');
+            isValid = false;
+        } else if (passwordInput.value !== passwordConfirmInput.value) {
             Validator.showError(passwordConfirmInput, 'Las contraseñas no coinciden');
             isValid = false;
         } else {
             Validator.removeError(passwordConfirmInput);
         }
+    } else {
+        // Both fields are empty - clear any errors
+        Validator.removeError(passwordInput);
+        Validator.removeError(passwordConfirmInput);
     }
-    
-    if (!Validator.validateUserRole(roleInput.value)) {
+
+    if (!roleInput.value || (roleInput.value !== '1' && roleInput.value !== '2')) {
         Validator.showError(roleInput, 'Selecciona un rol válido');
         isValid = false;
     } else {
         Validator.removeError(roleInput);
     }
-    
+
     if (isValid) {
-        window.location.href = '/admin/usuarios';
+        event.target.submit();
     }
 }
 

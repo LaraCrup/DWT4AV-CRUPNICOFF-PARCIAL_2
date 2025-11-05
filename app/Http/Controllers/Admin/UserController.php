@@ -34,18 +34,23 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'rol' => 'required|in:admin,usuario'
+            'password' => 'required|string|min:6',
+            'password_confirmation' => 'required|string',
+            'rol_id' => 'required|in:1,2'
         ]);
+
+        // Validate password match
+        if ($validated['password'] !== $request->input('password_confirmation')) {
+            return redirect()->back()
+                ->withErrors(['password_confirmation' => 'Las contraseñas no coinciden'])
+                ->withInput();
+        }
 
         // Hash the password
         $validated['password'] = Hash::make($validated['password']);
 
-        // Map rol string to rol_id (admin=1, usuario=2)
-        $validated['rol_id'] = ($validated['rol'] === 'admin') ? 1 : 2;
-
-        // Remove the rol field from validated data
-        unset($validated['rol']);
+        // Remove password_confirmation from validated data
+        unset($validated['password_confirmation']);
 
         User::create($validated);
 
@@ -80,22 +85,24 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'nullable|string|min:8|confirmed',
-            'rol' => 'required|in:admin,usuario'
+            'password' => 'nullable|string|min:6',
+            'password_confirmation' => 'nullable|string',
+            'rol_id' => 'required|in:1,2'
         ]);
 
+        // Validate password match if password is provided
+        if (!empty($validated['password']) && $validated['password'] !== $request->input('password_confirmation')) {
+            return redirect()->back()
+                ->withErrors(['password_confirmation' => 'Las contraseñas no coinciden'])
+                ->withInput();
+        }
+
         // Only hash password if provided
-        if ($validated['password']) {
+        if (!empty($validated['password'])) {
             $validated['password'] = Hash::make($validated['password']);
         } else {
             unset($validated['password']);
         }
-
-        // Map rol string to rol_id (admin=1, usuario=2)
-        $validated['rol_id'] = ($validated['rol'] === 'admin') ? 1 : 2;
-
-        // Remove the rol field from validated data
-        unset($validated['rol']);
 
         $usuario->update($validated);
 
