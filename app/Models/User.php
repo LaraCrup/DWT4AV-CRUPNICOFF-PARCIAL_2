@@ -23,11 +23,9 @@ class User extends Authenticatable
 
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 
     // Relación: Rol 1 → n User

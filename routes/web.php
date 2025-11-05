@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TortaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LoginController;
@@ -43,25 +44,22 @@ Route::get('/formReceived', function () {
     return view('formReceived');
 })->name('formReceived');
 
-// Ruta de perfil de usuario
-Route::get('/profile', function () {
-    return view('profile');
-})->name('profile');
+// Rutas protegidas (requieren autenticación)
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', function () {
+        return view('profile');
+    })->name('profile');
 
-// Ruta de login
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
-
-Route::post('/login', function () {
-    // Por ahora redirige al home
-    return redirect()->route('home')->with('success', 'Sesión iniciada correctamente');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-// Ruta de registro
-Route::get('/register', function () {
-    return view('register');
-})->name('register');
+// Rutas de autenticación (Solo para usuarios no autenticados)
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.store');
+});
 
 // Ruta de admin login
 Route::get('/admin/login', [LoginController::class, 'show'])->name('admin.login');

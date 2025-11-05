@@ -37,7 +37,7 @@ body {
     grid-template-rows: auto 1fr auto;
     min-height: 100vh;
     background-color: var(--color-light);
-    overflow-x: hidden; /* Oculta scroll horizontal en todo el body */
+    overflow-x: hidden;
 }
 
 main {
@@ -148,9 +148,8 @@ header {
     gap: 1.5rem;
 }
 
-.btnNav a:nth-child(2) {
+.btnNav a.cart{
     display: none;
-    background-color: var(--color-dark);
 }
 
 .btnNav a img{
@@ -327,6 +326,7 @@ header ul li a:hover {
         height: fit-content;
         flex-direction: row;
         gap: 1rem;
+        display: flex;
     }
 
     .cartIcon {
@@ -341,6 +341,7 @@ header ul li a:hover {
     .btnNav a.cart {
         position: relative;
         display: flex;
+        background-color: var(--color-dark);
     }
 
     .btnNav a.cart #cartCount {
@@ -349,7 +350,8 @@ header ul li a:hover {
         right: -10px;
     }
 
-    .btnNav a {
+    .btnNav a,
+    .btnNav button {
         display: flex;
     }
 

@@ -164,37 +164,34 @@ function validateLoginForm(event) {
     }
     
     if (isValid) {
-        if (event.target.id === 'loginAdminForm') {
-            window.location.href = '/admin/dashboard';
-        } else {
-            window.location.href = '/';
-        }
+        event.target.submit();
     }
 }
 
 function validateRegisterForm(event) {
     event.preventDefault();
     let isValid = true;
-    
+
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
     const dateInput = document.getElementById('date');
     const passwordInput = document.getElementById('password');
-    
+    const passwordConfirmInput = document.getElementById('password_confirmation');
+
     if (!Validator.validateName(nameInput.value)) {
         Validator.showError(nameInput, 'Ingresa un nombre válido (mínimo 3 caracteres)');
         isValid = false;
     } else {
         Validator.removeError(nameInput);
     }
-    
+
     if (!Validator.validateEmail(emailInput.value)) {
         Validator.showError(emailInput, 'Ingresa un email válido');
         isValid = false;
     } else {
         Validator.removeError(emailInput);
     }
-    
+
     if (!dateInput.value) {
         Validator.showError(dateInput, 'Ingresa tu fecha de nacimiento');
         isValid = false;
@@ -204,16 +201,23 @@ function validateRegisterForm(event) {
     } else {
         Validator.removeError(dateInput);
     }
-    
-    if (!Validator.validatePassword(passwordInput.value)) {
-        Validator.showError(passwordInput, 'La contraseña debe tener al menos 6 caracteres, una letra y un número');
+
+    if (!passwordInput.value || passwordInput.value.length < 6) {
+        Validator.showError(passwordInput, 'La contraseña debe tener al menos 6 caracteres');
         isValid = false;
     } else {
         Validator.removeError(passwordInput);
     }
-    
+
+    if (passwordInput.value !== passwordConfirmInput.value) {
+        Validator.showError(passwordConfirmInput, 'Las contraseñas no coinciden');
+        isValid = false;
+    } else {
+        Validator.removeError(passwordConfirmInput);
+    }
+
     if (isValid) {
-        window.location.href = '/login';
+        event.target.submit();
     }
 }
 

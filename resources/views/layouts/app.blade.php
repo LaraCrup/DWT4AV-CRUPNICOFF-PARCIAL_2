@@ -31,12 +31,19 @@
                 <li><a href="{{ route('contactUs') }}">Contacto</a></li>
             </ul>
             <div class="btnNav fontBody">
-                <a href="{{ route('profile') }}"><img src="/storage/shared/profile.png" alt="Mi Perfil"></a>
+                @auth
+                    <a href="{{ route('profile') }}"><img src="/storage/shared/profile.png" alt="Mi Perfil"></a>
+                @endauth
                 <a href="{{ route('cart') }}" class="btn cart">
                     Carrito
                     <span class="cartCount fontBody">0</span>
                 </a>
-                <a href="{{ route('login') }}" class="btn btnPrimary">Ingresar</a>
+                @auth
+                    <button type="button" class="btn btnPrimary" onclick="openLogoutConfirm()">Cerrar Sesión</button>
+                @endauth
+                @guest
+                    <a href="{{ route('login') }}" class="btn btnPrimary">Ingresar</a>
+                @endguest
             </div>
         </nav>
         <a href="{{ route('cart') }}" class="cartIcon cart" style="position:relative;">
@@ -58,9 +65,16 @@
                     <li><a href="{{ route('contactUs') }}">Contacto</a></li>
                 </ul>
                 <div class="btnNav fontBody">
-                    <a href="{{ route('profile') }}"><img src="/storage/shared/profile.png" alt="Mi Perfil"></a>
+                    @auth
+                        <a href="{{ route('profile') }}"><img src="/storage/shared/profile.png" alt="Mi Perfil"></a>
+                    @endauth
                     <a href="{{ route('cart') }}" class="btn cart">Carrito</a>
-                    <a href="{{ route('login') }}" class="btn btnPrimary">Ingresar</a>
+                    @auth
+                        <button type="button" class="btn btnPrimary" onclick="openLogoutConfirm()">Cerrar Sesión</button>
+                    @endauth
+                    @guest
+                        <a href="{{ route('login') }}" class="btn btnPrimary">Ingresar</a>
+                    @endguest
                 </div>
             </nav>
         </div>
@@ -88,6 +102,8 @@
             </ul>
         </div>
     </footer>
+    @include('partials.logout-confirm')
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="./scripts/menu.js"></script>
