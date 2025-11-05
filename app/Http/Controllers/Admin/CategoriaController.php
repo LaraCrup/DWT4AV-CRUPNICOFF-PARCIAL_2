@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class CategoriaController extends Controller
 {
     /**
-     * Display a listing of all categories (Admin)
+     * Display a listing of the resource.
      */
     public function index()
     {
@@ -31,7 +31,11 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nombre' => 'required|string|max:255|unique:categorias,nombre'
+            'nombre' => 'required|string|max:50|unique:categorias,nombre'
+        ],[
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El nombre de la categoría ya existe. Por favor, elige otro nombre.',
+            'nombre.max' => 'El nombre de la categoría no debe exceder los 50 caracteres.'
         ]);
 
         Categoria::create($validated);
@@ -65,7 +69,11 @@ class CategoriaController extends Controller
         $categoria = Categoria::findOrFail($id);
 
         $validated = $request->validate([
-            'nombre' => 'required|string|max:255|unique:categorias,nombre,' . $id
+            'nombre' => 'required|string|max:50|unique:categorias,nombre,' . $id
+        ],[
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El nombre de la categoría ya existe. Por favor, elige otro nombre.',
+            'nombre.max' => 'El nombre de la categoría no debe exceder los 50 caracteres.'
         ]);
 
         $categoria->update($validated);
@@ -80,7 +88,6 @@ class CategoriaController extends Controller
     {
         $categoria = Categoria::findOrFail($id);
 
-        // Verificar si tiene productos asociados
         if ($categoria->tortas()->count() > 0) {
             return redirect()->route('admin.categorias.show', $id)->with('error', 'No se puede eliminar una categoría que tiene productos asociados. Por favor, elimina los productos primero.');
         }

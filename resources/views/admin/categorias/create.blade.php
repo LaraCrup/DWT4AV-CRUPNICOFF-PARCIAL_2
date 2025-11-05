@@ -12,7 +12,7 @@
                     <label for="nombre">Nombre de la Categoría</label>
                     <input type="text" id="nombre" name="nombre" required placeholder="Nombre de la categoría" value="{{ old('nombre') }}">
                     @error('nombre')
-                        <span class="error">{{ $message }}</span>
+                        <span class="errorMessage">{{ $message }}</span>
                     @enderror
                 </div>
             </div>

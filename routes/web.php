@@ -87,7 +87,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::delete('/{id}', [AdminTortaController::class, 'destroy'])->name('destroy');
     });
 
-    // Admin - Categorías
     Route::prefix('categorias')->name('categorias.')->group(function () {
         Route::get('/', [AdminCategoriaController::class, 'index'])->name('index');
         Route::get('/create', [AdminCategoriaController::class, 'create'])->name('create');

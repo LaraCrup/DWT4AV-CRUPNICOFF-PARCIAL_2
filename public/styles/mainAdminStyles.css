@@ -248,6 +248,28 @@ footer {
     padding: 1rem;
 }
 
+.errorGeneral {
+    background-color: #fadbd8;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.errorGeneral p {
+    color: var(--color-error);
+}
+
+.alertInfo {
+    background-color: #d6eaf8;
+    border-radius: 4px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.alertInfo p {
+    color: #2c5aa0;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -545,4 +567,14 @@ table .btn {
     .goBack {
         left: 128px;
     }
+}
+
+.noRecords {
+    text-align: center;
+    font-weight: bold;
+}
+
+.noRecords>* {
+    display: inline-block;
+    width: 100%;
 }

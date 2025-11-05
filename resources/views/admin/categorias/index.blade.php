@@ -24,7 +24,7 @@
                         <tr>
                             <td>{{ $categoria->id }}</td>
                             <td>{{ $categoria->nombre }}</td>
-                            <td>{{ $categoria->tortas_count ?? $categoria->tortas->count() }}</td>
+                            <td>{{ $categoria->tortas->count() }}</td>
                             <td>
                                 <div>
                                     <a href="{{ route('admin.categorias.show', $categoria->id) }}" class="btn btnSee">
@@ -51,8 +51,9 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" style="text-align: center; padding: 20px;">
-                                No hay categorías disponibles. <a href="{{ route('admin.categorias.create') }}">Crear una nueva</a>
+                            <td colspan="4" class="noRecords">
+                                <p>No hay categorías disponibles.</p>
+                                <a href="{{ route('admin.categorias.create') }}">Crear una nueva</a>
                             </td>
                         </tr>
                     @endforelse
@@ -61,52 +62,8 @@
         </div>
     </section>
 
-    <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="modal">
-        <div class="modalContent">
-            <div class="modalHeader">
-                <h2 class="fontTitle">Confirmar eliminación</h2>
-                <button class="closeModalBtn" onclick="closeDeleteModal()">&times;</button>
-            </div>
-            <div class="modalBody fontBody">
-                <p>¿Estás seguro que deseas eliminar esta categoría?</p>
-                <p id="deleteItemInfo">Esta acción no se puede deshacer.</p>
-            </div>
-            <div class="modalFooter">
-                <button id="cancelDeleteBtn" class="btn btnSecondary" onclick="closeDeleteModal()">Cancelar</button>
-                <form id="deleteForm" method="POST" style="display: inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btnDelete">Eliminar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Event listeners para botones de eliminar
-        document.querySelectorAll('.deleteBtn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const id = this.dataset.id;
-                const nombre = this.dataset.nombre;
-                document.getElementById('deleteItemInfo').textContent = `Categoría: "${nombre}" será eliminada permanentemente.`;
-                document.getElementById('deleteForm').action = `{{ route('admin.categorias.destroy', ':id') }}`.replace(':id', id);
-                document.getElementById('deleteModal').style.display = 'flex';
-            });
-        });
-
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').style.display = 'none';
-        }
-
-        document.querySelector('.closeModalBtn').addEventListener('click', closeDeleteModal);
-        document.getElementById('cancelDeleteBtn').addEventListener('click', closeDeleteModal);
-
-        // Cerrar modal al hacer click fuera de él
-        document.getElementById('deleteModal').addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeDeleteModal();
-            }
-        });
-    </script>
+    @include('partials.deleteModal', [
+        'route' => route('admin.categorias.destroy', ':id'),
+        'itemName' => 'categoría'
+    ])
 @endsection

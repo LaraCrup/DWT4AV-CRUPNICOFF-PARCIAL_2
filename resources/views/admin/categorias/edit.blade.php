@@ -13,7 +13,7 @@
                     <label for="nombre">Nombre de la Categoría</label>
                     <input type="text" id="nombre" name="nombre" required placeholder="Nombre de la categoría" value="{{ old('nombre', $categoria->nombre) }}">
                     @error('nombre')
-                        <span class="error">{{ $message }}</span>
+                        <span class="errorMessage">{{ $message }}</span>
                     @enderror
                 </div>
 
@@ -21,7 +21,7 @@
                     <label>Información adicional</label>
                     <div class="infoGroup fontBody">
                         <p><strong>ID de categoría:</strong> {{ $categoria->id }}</p>
-                        <p><strong>Productos vinculados:</strong> {{ $categoria->tortas_count ?? $categoria->tortas->count() }}</p>
+                        <p><strong>Productos vinculados:</strong> {{ $categoria->tortas->count() }}</p>
                     </div>
                 </div>
             </div>
