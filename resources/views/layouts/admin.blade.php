@@ -76,7 +76,7 @@
         </div>
     </footer>
     <script src="/scripts/menu.js"></script>
-    @include('partials.logout-confirm')
+    @include('partials.logoutConfirm')
     @yield('scripts')
 </body>
 

@@ -1,10 +1,3 @@
-{{--
-    Modal reutilizable para confirmación de eliminación
-
-    @param string $route - Nombre de la ruta (ej: 'admin.usuarios.destroy')
-    @param string $itemName - Nombre del item a mostrar (ej: 'usuario', 'categoría', 'producto')
---}}
-
 <div id="deleteModal" class="modal">
     <div class="modalContent">
         <div class="modalHeader">

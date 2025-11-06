@@ -1,4 +1,3 @@
-<!-- Logout Confirmation Modal -->
 <div id="logoutModal" class="logoutModal">
     <div class="logoutModalContent">
         <h2 class="fontTitle">¿Estás seguro de que deseas salir?</h2>
