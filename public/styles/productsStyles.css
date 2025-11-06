@@ -70,13 +70,17 @@
 }
 
 #filters-content {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 1.5rem;
     background-color: var(--color-light);
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 1rem;
+}
+
+#filters-content.show {
+    display: flex;
 }
 
 #filters-content div label {

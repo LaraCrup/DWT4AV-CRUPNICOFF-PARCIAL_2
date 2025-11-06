@@ -14,7 +14,7 @@
                     <a href="{{ route('tortas.index') }}">Todas</a>
                     <span>></span>
                     @if($torta->categoria)
-                        <a href="{{ route('tortas.index') }}">{{ $torta->categoria->nombre }}</a>
+                        <a href="{{ route('tortas.index', ['categoria' => $torta->categoria->id]) }}">{{ $torta->categoria->nombre }}</a>
                         <span>></span>
                     @endif
                     <p>{{ $torta->nombre }}</p>
@@ -32,7 +32,7 @@
                     <a href="{{ route('tortas.index') }}">Todas</a>
                     <span>></span>
                     @if($torta->categoria)
-                        <a href="{{ route('tortas.index') }}">{{ $torta->categoria->nombre }}</a>
+                        <a href="{{ route('tortas.index', ['categoria' => $torta->categoria->id]) }}">{{ $torta->categoria->nombre }}</a>
                         <span>></span>
                     @endif
                     <p>{{ $torta->nombre }}</p>

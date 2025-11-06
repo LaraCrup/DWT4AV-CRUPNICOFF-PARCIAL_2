@@ -16,7 +16,7 @@
             <button type="button" class="btn" onclick="document.getElementById('filters-content').classList.toggle('show')">
                 Filtros
             </button>
-            <div id="filters-content" style="display:none;">
+            <div id="filters-content">
                 <h2 class="fontTitle">Filtros</h2>
                 <div>
                     <span class="fontTitle">Categoría</span>
@@ -28,8 +28,8 @@
                 </div>
                 <div>
                     <label for="precio-max" class="fontTitle">Precio máximo</label>
-                    <input type="range" id="precio-max" name="precio-max" min="0" max="10000" step="100" value="10000" oninput="document.getElementById('precio-max-value').textContent = this.value">
-                    <span id="precio-max-value">10000</span>
+                    <input type="range" id="precio-max" name="precio-max" min="0" max="4000" step="100" value="4000" oninput="document.getElementById('precio-max-value').textContent = this.value">
+                    <span id="precio-max-value">4000</span>
                 </div>
                 <div>
                     <span class="fontTitle">Popularidad</span>
