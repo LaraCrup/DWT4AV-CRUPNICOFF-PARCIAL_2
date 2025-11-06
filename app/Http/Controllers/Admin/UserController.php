@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = User::paginate(15);
+        $usuarios = User::withCount('compras')->paginate(15);
         return view('admin.usuarios.index', compact('usuarios'));
     }
 
@@ -73,7 +73,11 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $usuario = User::findOrFail($id);
+        $usuario = User::with(['compras' => function($query) {
+            $query->with(['tortas' => function($subquery) {
+                $subquery->with('tamanos');
+            }])->orderBy('fecha_compra', 'desc');
+        }])->findOrFail($id);
         return view('admin.usuarios.show', compact('usuario'));
     }
 

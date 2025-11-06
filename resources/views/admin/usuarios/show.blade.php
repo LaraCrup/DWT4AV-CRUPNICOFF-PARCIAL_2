@@ -7,7 +7,7 @@
     <h1 class="fontTitle">Detalle de usuario</h1>
     <a href="{{ route('admin.usuarios.index') }}" class="goBack fontBody">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-            <path fill="#f8f7ff" d="m7.85 13l2.85 2.85q.3.3.288.7t-.288.7q-.3.3-.712.313t-.713-.288L4.7 12.7q-.3-.3-.3-.7t.3-.7l4.575-4.575q.3-.3.713-.287t.712.312q.275.3.288.7t-.288.7L7.85 11H19q.425 0 .713.288T20 12t-.288.713T19 13z"/>
+            <path fill="#f8f7ff" d="m7.85 13l2.85 2.85q.3.3.288.7t-.288.7q-.3.3-.712.313t-.713-.288L4.7 12.7q-.3-.3-.3-.7t.3-.7l4.575-4.575q.3-.3.713-.287t.712.312q.275.3.288.7t-.288.7L7.85 11H19q.425 0 .713.288T20 12t-.288.713T19 13z" />
         </svg>
         Volver a usuarios
     </a>
@@ -29,9 +29,7 @@
                 <tr>
                     <th>ID Compra</th>
                     <th>Fecha</th>
-                    <th>Producto</th>
-                    <th>Tamaño</th>
-                    <th>Cantidad</th>
+                    <th>Productos</th>
                     <th>Total</th>
                     <th>Estado</th>
                 </tr>
@@ -40,18 +38,27 @@
                 @forelse($usuario->compras as $compra)
                 <tr>
                     <td>#{{ $compra->id }}</td>
-                    <td>{{ $compra->created_at->format('d/m/Y') }}</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>${{ number_format($compra->total ?? 0, 0, ',', '.') }}</td>
+                    <td>{{ $compra->fecha_compra->format('d/m/Y') }}</td>
                     <td>
-                        <span class="statusPending">Compra registrada</span>
+                        <ul style="list-style: none; max-width: 300px; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px;">
+                            @foreach($compra->tortas as $torta)
+                            <li style="width: fit-content;">
+                                <strong>{{ $torta->nombre }}</strong><br>
+                                <small>Cantidad: {{ $torta->pivot->cantidad }}
+                                    @if($torta->pivot->tamano)
+                                    | Tamaño: {{ $torta->pivot->tamano->nombre }}
+                                    @endif
+                                </small>
+                            </li>
+                            @endforeach
+                        </ul>
                     </td>
+                    <td>${{ number_format($compra->total ?? 0, 2, ',', '.') }}</td>
+                    <td><span class="statusPending">Compra registrada</span></td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" class="noRecords">
+                    <td colspan="5" class="noRecords">
                         <p class="fontBody">No hay compras registradas para este usuario</p>
                     </td>
                 </tr>

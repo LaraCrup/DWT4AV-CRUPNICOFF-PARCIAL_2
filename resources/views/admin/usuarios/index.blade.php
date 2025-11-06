@@ -33,7 +33,7 @@
                         @if($usuario->rol_id === 1)
                             N/A
                         @else
-                            0
+                            {{ $usuario->compras_count }}
                         @endif
                     </td>
                     <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
