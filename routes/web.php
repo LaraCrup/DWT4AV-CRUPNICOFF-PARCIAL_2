@@ -7,6 +7,7 @@ use App\Http\Controllers\TortaController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TortaController as AdminTortaController;
 use App\Http\Controllers\Admin\CategoriaController as AdminCategoriaController;
@@ -30,10 +31,7 @@ Route::get('/formReceived', function () {
 })->name('formReceived');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', function () {
-        return view('profile');
-    })->name('profile');
-
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
