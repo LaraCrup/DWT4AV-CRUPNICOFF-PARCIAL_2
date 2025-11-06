@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Torta;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        // Obtener las 5 tortas más destacadas (las que están en el carousel)
-        $tortasDestacadas = Torta::where('valoracion', '>=', 4)
-            ->orderBy('valoracion', 'desc')
-            ->limit(5)
+        // Obtener las tortas marcadas como destacadas para el carousel
+        $tortasDestacadas = Torta::where('destacada', true)
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('home', ['tortasDestacadas' => $tortasDestacadas]);

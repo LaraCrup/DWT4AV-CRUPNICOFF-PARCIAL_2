@@ -4,7 +4,7 @@ $(document).ready(function () {
         arrows: true,
         dots: false,
         centerMode: true,
-        slidesToShow: 4,
+        slidesToShow: 5,
         slidesToScroll: 1,
         prevArrow: '<button type="button" class="slick-prev">❮</button>',
         nextArrow: '<button type="button" class="slick-next">❯</button>',
@@ -34,6 +34,13 @@ $(document).ready(function () {
                 breakpoint: 1280,
                 settings: {
                     slidesToShow: 3,
+                    arrows: true
+                }
+            },
+            {
+                breakpoint: 1500,
+                settings: {
+                    slidesToShow: 4,
                     arrows: true
                 }
             }

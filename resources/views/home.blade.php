@@ -50,7 +50,9 @@
         <div class="carouselContainer">
             <div id="cakesSlider" class="carouselSlider">
                 @forelse($tortasDestacadas as $torta)
-                    @include('partials.tortaCard', ['isCarousel' => true])
+                    <div class="slick-slide-wrapper">
+                        @include('partials.tortaCard', ['isCarousel' => true])
+                    </div>
                 @empty
                     <p class="fontBody">No hay tortas destacadas disponibles</p>
                 @endforelse
