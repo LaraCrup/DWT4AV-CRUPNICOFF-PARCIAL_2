@@ -20,6 +20,7 @@
                     <th>Tamaños y precios</th>
                     <th>Alérgenos</th>
                     <th>Popularidad</th>
+                    <th>Destacada</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -47,6 +48,9 @@
                             @endfor
                     </td>
                     <td>
+                        {{ $torta->destacada ? 'Sí' : 'No' }}
+                    </td>
+                    <td>
                         <div>
                             <a href="{{ route('admin.tortas.show', $torta->id) }}" class="btn btnSee">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
@@ -72,7 +76,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" class="noRecords">
+                    <td colspan="9" class="noRecords">
                         <p>No hay productos disponibles.</p>
                         <a href="{{ route('admin.tortas.create') }}">Crear uno nuevo</a>
                     </td>
@@ -84,7 +88,7 @@
 </section>
 
 @include('partials.deleteModal', [
-    'route' => route('admin.tortas.destroy', ':id'),
+    'route' => 'admin.tortas.destroy',
     'itemName' => 'producto'
 ])
 @endsection

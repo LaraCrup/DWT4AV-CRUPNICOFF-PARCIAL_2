@@ -17,7 +17,8 @@ class Torta extends Model
         'imagen',
         'valoracion',
         'alergeno',
-        'descripcion'
+        'descripcion',
+        'destacada'
     ];
 
     public function categoria()

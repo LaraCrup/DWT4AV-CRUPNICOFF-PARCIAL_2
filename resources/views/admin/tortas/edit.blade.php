@@ -138,6 +138,13 @@
                     </div>
                 </div>
 
+                <div class="formGroup">
+                    <div class="checkboxItem">
+                        <input type="checkbox" id="destacada" name="destacada" value="1" {{ old('destacada', $torta->destacada ?? false) ? 'checked' : '' }}>
+                        <label for="destacada">Destacar este producto</label>
+                    </div>
+                </div>
+
             </div>
 
             <div class="additionalInfo fontLight">

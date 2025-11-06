@@ -41,6 +41,7 @@ class TortaController extends Controller
             'valoracion' => 'required|integer|min:1|max:5',
             'alergenios' => 'nullable|array',
             'descripcion' => 'required|string',
+            'destacada' => 'nullable|boolean',
             'tamanos' => 'required|array|min:1',
             'tamanos.*' => 'exists:tamanos,id',
             'precios' => 'required|array',
@@ -83,6 +84,8 @@ class TortaController extends Controller
             $validated['alergeno'] = null;
         }
         unset($validated['alergenios']);
+
+        $validated['destacada'] = isset($validated['destacada']) ? (bool)$validated['destacada'] : false;
 
         $torta = Torta::create($validated);
 
@@ -133,6 +136,7 @@ class TortaController extends Controller
             'valoracion' => 'required|integer|min:1|max:5',
             'alergenios' => 'nullable|array',
             'descripcion' => 'nullable|string',
+            'destacada' => 'nullable|boolean',
             'tamanos' => 'required|array|min:1',
             'tamanos.*' => 'exists:tamanos,id',
             'precios' => 'required|array',
@@ -175,6 +179,8 @@ class TortaController extends Controller
             $validated['alergeno'] = null;
         }
         unset($validated['alergenios']);
+
+        $validated['destacada'] = isset($validated['destacada']) ? (bool)$validated['destacada'] : false;
 
         $torta->update($validated);
 
