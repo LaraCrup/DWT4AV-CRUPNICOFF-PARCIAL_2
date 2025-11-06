@@ -11,6 +11,10 @@ class Compra extends Model
 
     protected $fillable = ['usuario_id', 'fecha_compra', 'total'];
 
+    protected $casts = [
+        'fecha_compra' => 'datetime',
+    ];
+
     public function usuario()
     {
         return $this->belongsTo(User::class, 'usuario_id');

@@ -162,3 +162,86 @@
     }
     
 }
+
+        .purchasesContainer {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .purchaseCard {
+            min-width: 280px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+        }
+
+        .purchaseInfo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .purchaseTotal {
+            text-align: right;
+        }
+
+        .purchaseItems {
+            margin-bottom: 1rem;
+        }
+
+        .purchaseItems ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0.5rem 0 0 0;
+        }
+
+        .purchaseItems li {
+            padding: 0.5rem 0;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .purchaseItems li:not(:last-child) {
+            border-bottom: 1px solid #eee;
+        }
+
+        .btnSmall {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .emptyState {
+            text-align: center;
+            padding: 2rem;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .emptyState p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .purchaseInfo {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .purchaseTotal {
+                text-align: left;
+            }
+
+            .purchaseCard{
+                min-width: 314px;
+            }
+        }

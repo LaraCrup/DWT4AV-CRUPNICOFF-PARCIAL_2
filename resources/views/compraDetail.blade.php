@@ -21,8 +21,9 @@
                 </div>
             </div>
 
+            <h2 class="fontTitle">Productos</h2>
+
             <div class="purchaseItemsDetail">
-                <h2 class="fontTitle">Productos</h2>
 
                 @foreach($compra->tortas as $torta)
                     <div class="purchaseItemDetail fontBody">
