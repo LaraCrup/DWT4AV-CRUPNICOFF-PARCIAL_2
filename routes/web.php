@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TortaController as AdminTortaController;
 use App\Http\Controllers\Admin\CategoriaController as AdminCategoriaController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\MensajeController as AdminMensajeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -93,5 +94,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::get('/{id}/edit', [AdminUserController::class, 'edit'])->name('edit');
         Route::put('/{id}', [AdminUserController::class, 'update'])->name('update');
         Route::delete('/{id}', [AdminUserController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('mensajes')->name('mensajes.')->group(function () {
+        Route::get('/', [AdminMensajeController::class, 'index'])->name('index');
+        Route::get('/{id}', [AdminMensajeController::class, 'show'])->name('show');
     });
 });

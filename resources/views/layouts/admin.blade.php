@@ -29,6 +29,7 @@
                 <li><a href="{{ route('admin.tortas.index') }}">Productos</a></li>
                 <li><a href="{{ route('admin.categorias.index') }}">Categorias</a></li>
                 <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
+                <li><a href="{{ route('admin.mensajes.index') }}">Mensajes</a></li>
             </ul>
             <div class="btnNav fontBody">
                 <button onclick="openLogoutConfirm()" class="btn btnPrimary">Cerrar Sesión</button>
@@ -46,6 +47,8 @@
                     <li><a href="{{ route('admin.dashboard') }}">Inicio</a></li>
                     <li><a href="{{ route('admin.tortas.index') }}">Productos</a></li>
                     <li><a href="{{ route('admin.categorias.index') }}">Categorias</a></li>
+                    <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
+                    <li><a href="{{ route('admin.mensajes.index') }}">Mensajes</a></li>
                 </ul>
                 <div class="btnNav fontBody">
                     <button onclick="openLogoutConfirm()" class="btn btnPrimary">Cerrar Sesión</button>
@@ -72,6 +75,8 @@
                 <li><a href="{{ route('admin.dashboard') }}">Inicio</a></li>
                 <li><a href="{{ route('admin.tortas.index') }}">Productos</a></li>
                 <li><a href="{{ route('admin.categorias.index') }}">Categorias</a></li>
+                <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
+                <li><a href="{{ route('admin.mensajes.index') }}">Mensajes</a></li>
             </ul>
         </div>
     </footer>
