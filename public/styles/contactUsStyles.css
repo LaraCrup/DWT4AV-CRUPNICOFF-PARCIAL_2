@@ -90,6 +90,14 @@ input, textarea {
     padding: 0.5rem;
 }
 
+.noForm{
+    color: var(--color-dark);
+    text-align: center;
+    background-color: var(--color-accent);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
 @media screen and (min-width: 768px){
     .contactSection{
         width: 100%;
@@ -119,6 +127,10 @@ input, textarea {
 
     .formSection form div>div{
         width: 50%;
+    }
+
+    .noForm{
+        font-size: 1rem;
     }
 }
 

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TortaController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TortaController as AdminTortaController;
 use App\Http\Controllers\Admin\CategoriaController as AdminCategoriaController;
@@ -12,16 +13,9 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 // Ruta de bienvenida
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Ruta de contacto
-Route::get('/contactUs', function () {
-    return view('contactUs');
-})->name('contactUs');
-
-// Ruta POST para enviar formulario de contacto
-Route::post('/contactUs', function () {
-    // Por ahora solo redirige a formReceived
-    return redirect()->route('formReceived')->with('success', 'Mensaje enviado correctamente');
-});
+// Rutas de contacto
+Route::get('/contactUs', [ContactUsController::class, 'show'])->name('contactUs');
+Route::post('/contactUs', [ContactUsController::class, 'store'])->middleware('auth')->name('contactUs.store');
 
 // Ruta de sobre nosotros
 Route::get('/aboutUs', function () {

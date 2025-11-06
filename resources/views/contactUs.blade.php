@@ -55,23 +55,32 @@
 
     <section class="formSection">
         <h2 class="fontTitle">Envíanos un mensaje</h2>
-        <form action="{{ route('contactUs') }}" method="POST" class="contactForm fontBody">
-            @csrf
-            <div>
+
+        @auth
+            <form action="{{ route('contactUs.store') }}" method="POST" class="contactForm fontBody">
+                @csrf
                 <div>
-                    <label for="name">Nombre:</label>
-                    <input type="text" id="name" name="name" required>
+                    <label for="titulo">Título:</label>
+                    <input type="text" id="titulo" name="titulo" required>
+                    @error('titulo')
+                        <span class="errorMessage">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div>
-                    <label for="email">Correo Electrónico:</label>
-                    <input type="email" id="email" name="email" required>
+                    <label for="mensaje">Mensaje:</label>
+                    <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+                    @error('mensaje')
+                        <span class="errorMessage">{{ $message }}</span>
+                    @enderror
                 </div>
+                <button type="submit" class="btn btnPrimary">Enviar</button>
+            </form>
+        @endauth
+        @guest
+            <div class="fontBody noForm">
+                <p>Debes <a href="{{ route('login') }}">iniciar sesión</a> para enviar un mensaje.</p>
+                <p>¿No tienes cuenta? <a href="{{ route('register') }}">Regístrate aquí</a>.</p>
             </div>
-            <div>
-                <label for="message">Mensaje:</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="btn btnPrimary">Enviar</button>
-        </form>
+        @endguest
     </section>
 @endsection

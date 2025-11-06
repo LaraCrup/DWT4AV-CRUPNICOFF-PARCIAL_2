@@ -39,4 +39,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Compra::class, 'usuario_id');
     }
+
+    // Relación: User 1 → n Mensaje
+    public function mensajes(): HasMany
+    {
+        return $this->hasMany(Mensaje::class, 'usuario_id');
+    }
 }
