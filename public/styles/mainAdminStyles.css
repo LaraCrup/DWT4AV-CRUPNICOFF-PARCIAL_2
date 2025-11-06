@@ -248,17 +248,6 @@ footer {
     padding: 1rem;
 }
 
-.errorGeneral {
-    background-color: #fadbd8;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    padding: 15px;
-}
-
-.errorGeneral p {
-    color: var(--color-error);
-}
-
 .alertInfo {
     background-color: #d6eaf8;
     border-radius: 4px;

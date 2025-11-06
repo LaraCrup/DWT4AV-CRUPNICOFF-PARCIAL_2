@@ -1,9 +1,8 @@
 {{--
     Modal reutilizable para confirmación de eliminación
 
-    @param string $route - Nombre de la ruta (ej: 'admin.categorias.destroy')
-    @param string $itemName - Nombre del item a mostrar (ej: 'categoría', 'usuario', 'producto')
-    @param string $buttonSelector - Selector CSS de los botones de delete (default: '.deleteBtn')
+    @param string $route - Nombre de la ruta (ej: 'admin.usuarios.destroy')
+    @param string $itemName - Nombre del item a mostrar (ej: 'usuario', 'categoría', 'producto')
 --}}
 
 <div id="deleteModal" class="modal">
@@ -30,18 +29,20 @@
 <script>
     const deleteModalConfig = {
         route: "{{ $route }}",
-        itemName: "{{ $itemName ?? 'elemento' }}",
-        buttonSelector: "{{ '.deleteBtn' }}"
+        itemName: "{{ $itemName ?? 'elemento' }}"
     };
 
-    document.querySelectorAll(deleteModalConfig.buttonSelector).forEach(btn => {
+    document.querySelectorAll('.deleteBtn').forEach(btn => {
         btn.addEventListener('click', function() {
             const id = this.dataset.id;
             const nombre = this.dataset.nombre;
             const itemName = deleteModalConfig.itemName.charAt(0).toUpperCase() + deleteModalConfig.itemName.slice(1);
 
             document.getElementById('deleteItemInfo').textContent = `${itemName}: "${nombre}" será eliminada permanentemente.`;
-            document.getElementById('deleteForm').action = deleteModalConfig.route.replace(':id', id);
+
+            const routeUrl = "{{ route($route, '__ID__') }}".replace('__ID__', id);
+            document.getElementById('deleteForm').action = routeUrl;
+
             document.getElementById('deleteModal').style.display = 'flex';
         });
     });

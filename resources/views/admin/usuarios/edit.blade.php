@@ -19,10 +19,9 @@
                     required
                     placeholder="Nombre y apellido"
                     value="{{ old('name', $usuario->name) }}"
-                    class="@error('name') is-invalid @enderror"
                 >
                 @error('name')
-                    <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
+                    <span class="errorMessage">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -35,10 +34,22 @@
                     required
                     placeholder="ejemplo@correo.com"
                     value="{{ old('email', $usuario->email) }}"
-                    class="@error('email') is-invalid @enderror"
                 >
                 @error('email')
-                    <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
+                    <span class="errorMessage">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="formGroup">
+                <label for="fecha_nacimiento">Fecha de nacimiento</label>
+                <input
+                    type="date"
+                    id="fecha_nacimiento"
+                    name="fecha_nacimiento"
+                    value="{{ old('fecha_nacimiento', $usuario->fecha_nacimiento) }}"
+                >
+                @error('fecha_nacimiento')
+                    <span class="errorMessage">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -49,10 +60,9 @@
                     id="password"
                     name="password"
                     placeholder="Dejar en blanco para mantener la actual"
-                    class="@error('password') is-invalid @enderror"
                 >
                 @error('password')
-                    <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
+                    <span class="errorMessage">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -72,14 +82,13 @@
                     id="rol_id"
                     name="rol_id"
                     required
-                    class="@error('rol_id') is-invalid @enderror"
                 >
                     <option value="" disabled>Selecciona un rol</option>
                     <option value="1" {{ old('rol_id', $usuario->rol_id) == 1 ? 'selected' : '' }}>Administrador</option>
                     <option value="2" {{ old('rol_id', $usuario->rol_id) == 2 ? 'selected' : '' }}>Usuario regular</option>
                 </select>
                 @error('rol_id')
-                    <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
+                    <span class="errorMessage">{{ $message }}</span>
                 @enderror
             </div>
 

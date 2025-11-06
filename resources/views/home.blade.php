@@ -7,6 +7,10 @@
 @endsection
 
 @section('content')
+    @if(session('registration_success'))
+        @include('partials.modalSuccess', ['message' => session('registration_success')])
+    @endif
+
     <section class="hero">
         <h1 class="fontTitle">¡Bienvenido a Tortas Manuela, el sabor auténtico!</h1>
         <p class="fontBody">Hechas con amor y los mejores ingredientes</p>

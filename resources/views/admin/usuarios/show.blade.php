@@ -37,7 +37,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($usuario->compras ?? [] as $compra)
+                @forelse($usuario->compras as $compra)
                 <tr>
                     <td>#{{ $compra->id }}</td>
                     <td>{{ $compra->created_at->format('d/m/Y') }}</td>
@@ -51,7 +51,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" class="text-center">
+                    <td colspan="7" class="noRecords">
                         <p class="fontBody">No hay compras registradas para este usuario</p>
                     </td>
                 </tr>

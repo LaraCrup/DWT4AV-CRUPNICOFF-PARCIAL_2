@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
-     * Display a listing of all users (Admin)
+     * Display a listing of all resources.
      */
     public function index()
     {
@@ -32,24 +32,35 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:50',
             'email' => 'required|email|unique:users,email',
+            'fecha_nacimiento' => 'nullable|date|before:today',
             'password' => 'required|string|min:6',
             'password_confirmation' => 'required|string',
             'rol_id' => 'required|in:1,2'
+        ], [
+            'name.required' => 'El nombre es requerido',
+            'name.string' => 'El nombre debe ser texto',
+            'name.max' => 'El nombre no puede exceder 50 caracteres',
+            'email.required' => 'El email es requerido',
+            'email.email' => 'El email no es válido',
+            'email.unique' => 'Este email ya está registrado',
+            'fecha_nacimiento.date' => 'La fecha de nacimiento no es válida',
+            'fecha_nacimiento.before' => 'La fecha de nacimiento no puede ser posterior a hoy',
+            'password.required' => 'La contraseña es requerida',
+            'password.min' => 'La contraseña debe tener al menos 6 caracteres',
+            'rol_id.required' => 'El rol es requerido',
+            'rol_id.in' => 'El rol seleccionado no es válido',
         ]);
 
-        // Validate password match
         if ($validated['password'] !== $request->input('password_confirmation')) {
             return redirect()->back()
                 ->withErrors(['password_confirmation' => 'Las contraseñas no coinciden'])
                 ->withInput();
         }
 
-        // Hash the password
         $validated['password'] = Hash::make($validated['password']);
 
-        // Remove password_confirmation from validated data
         unset($validated['password_confirmation']);
 
         User::create($validated);
@@ -83,21 +94,32 @@ class UserController extends Controller
         $usuario = User::findOrFail($id);
 
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:50',
             'email' => 'required|email|unique:users,email,' . $id,
+            'fecha_nacimiento' => 'nullable|date|before:today',
             'password' => 'nullable|string|min:6',
             'password_confirmation' => 'nullable|string',
             'rol_id' => 'required|in:1,2'
+        ], [
+            'name.required' => 'El nombre es requerido',
+            'name.string' => 'El nombre debe ser texto',
+            'name.max' => 'El nombre no puede exceder 50 caracteres',
+            'email.required' => 'El email es requerido',
+            'email.email' => 'El email no es válido',
+            'email.unique' => 'Este email ya está registrado',
+            'fecha_nacimiento.date' => 'La fecha de nacimiento no es válida',
+            'fecha_nacimiento.before' => 'La fecha de nacimiento no puede ser posterior a hoy',
+            'password.min' => 'La contraseña debe tener al menos 6 caracteres',
+            'rol_id.required' => 'El rol es requerido',
+            'rol_id.in' => 'El rol seleccionado no es válido',
         ]);
 
-        // Validate password match if password is provided
         if (!empty($validated['password']) && $validated['password'] !== $request->input('password_confirmation')) {
             return redirect()->back()
                 ->withErrors(['password_confirmation' => 'Las contraseñas no coinciden'])
                 ->withInput();
         }
 
-        // Only hash password if provided
         if (!empty($validated['password'])) {
             $validated['password'] = Hash::make($validated['password']);
         } else {

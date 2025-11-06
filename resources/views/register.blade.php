@@ -11,14 +11,8 @@
         <h1 class="fontTitle">Registrarse</h1>
 
         @if (session('error'))
-            <div class="alert alert-danger fontBody" style="padding: 15px; margin-bottom: 20px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; color: #721c24;">
+            <div class="errorGeneral fontBody">
                 {{ session('error') }}
-            </div>
-        @endif
-
-        @if (session('success'))
-            <div class="alert alert-success fontBody" style="padding: 15px; margin-bottom: 20px; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 4px; color: #155724;">
-                {{ session('success') }}
             </div>
         @endif
 
@@ -32,7 +26,7 @@
                         value="{{ old('name') }}"
                         class="@error('name') is-invalid @enderror">
                     @error('name')
-                        <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
+                        <span class="errorMessage">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="formGroup">
@@ -42,7 +36,7 @@
                         value="{{ old('email') }}"
                         class="@error('email') is-invalid @enderror">
                     @error('email')
-                        <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
+                        <span class="errorMessage">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="formGroup">
@@ -51,7 +45,7 @@
                         value="{{ old('date') }}"
                         class="@error('date') is-invalid @enderror">
                     @error('date')
-                        <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
+                        <span class="errorMessage">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="formGroup">
@@ -60,7 +54,7 @@
                         placeholder="Ingresa tu contraseña"
                         class="@error('password') is-invalid @enderror">
                     @error('password')
-                        <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
+                        <span class="errorMessage">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="formGroup">
@@ -69,7 +63,7 @@
                         placeholder="Confirma tu contraseña"
                         class="@error('password_confirmation') is-invalid @enderror">
                     @error('password_confirmation')
-                        <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ $message }}</span>
+                        <span class="errorMessage">{{ $message }}</span>
                     @enderror
                 </div>
             </div>

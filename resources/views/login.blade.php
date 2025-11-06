@@ -10,18 +10,8 @@
     <section>
         <h1 class="fontTitle">Iniciar sesión</h1>
 
-        @if ($errors->any())
-            <div class="alert alert-danger fontBody" style="padding: 15px; margin-bottom: 20px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; color: #721c24;">
-                <ul style="margin: 0; padding-left: 20px;">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         @if (session('error'))
-            <div class="alert alert-danger fontBody" style="padding: 15px; margin-bottom: 20px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; color: #721c24;">
+            <div class="errorGeneral fontBody">
                 {{ session('error') }}
             </div>
         @endif
@@ -34,7 +24,7 @@
                     <input type="email" id="email" name="email" required
                         placeholder="Ingresa tu correo electrónico" value="{{ old('email') }}">
                     @error('email')
-                        <span class="error-message" style="color: #dc3545; font-size: 0.875rem; margin-top: 5px; display: block;">{{ $message }}</span>
+                        <span class="errorMessage">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="formGroup">
@@ -42,7 +32,7 @@
                     <input type="password" id="password" name="password" required
                         placeholder="Ingresa tu contraseña">
                     @error('password')
-                        <span class="error-message" style="color: #dc3545; font-size: 0.875rem; margin-top: 5px; display: block;">{{ $message }}</span>
+                        <span class="errorMessage">{{ $message }}</span>
                     @enderror
                 </div>
             </div>
@@ -50,7 +40,6 @@
         </form>
         <div class="otherOptions">
             <p class="fontBody">¿No tienes una cuenta? <a href="{{ route('register') }}">Regístrate</a></p>
-            <p class="fontBody">¿Sos un usuario administrador? <a href="{{ route('admin.login') }}">Haz click aquí.</a></p>
         </div>
     </section>
 @endsection
