@@ -23,7 +23,7 @@
                 <span>Total:</span>
                 <span id="total">$0</span>
             </div>
-            <a href="{{ route('checkout') }}" id="checkoutBtn" class="btn btnPrimary">Pagar</a>
+            <button type="button" id="checkoutBtn" class="btn btnPrimary">Pagar</button>
         </div>
     </section>
 @endsection

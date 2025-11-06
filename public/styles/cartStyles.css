@@ -159,3 +159,117 @@
     }
     
 }
+
+
+        .purchaseDetailsContainer {
+            margin-top: 2rem;
+        }
+
+        .purchaseHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            margin-bottom: 2rem;
+        }
+
+        .purchaseTotal {
+            text-align: right;
+        }
+
+        .purchaseItemsDetail {
+            margin-bottom: 2rem;
+        }
+
+        .purchaseItemDetail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            margin-bottom: 1rem;
+        }
+
+        .purchaseItemDetail .itemInfo {
+            display: flex;
+            gap: 1.5rem;
+            flex: 1;
+        }
+
+        .purchaseItemDetail img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .imagePlaceholder {
+            width: 120px;
+            height: 120px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: #666;
+        }
+
+        .purchaseItemDetail .itemDetails {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .purchaseItemDetail .itemDetails h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .purchaseItemDetail .itemSubtotal {
+            text-align: right;
+            min-width: 140px;
+        }
+
+        .purchaseActions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-start;
+        }
+
+        .purchaseActions .btn {
+            padding: 10px 20px;
+        }
+
+        @media (max-width: 768px) {
+            .purchaseHeader {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .purchaseTotal {
+                text-align: left;
+            }
+
+            .purchaseItemDetail {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .purchaseItemDetail .itemInfo {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .purchaseItemDetail .itemSubtotal {
+                text-align: center;
+                margin-top: 1rem;
+                width: 100%;
+            }
+        }

@@ -13,7 +13,6 @@
 @endsection
 
 @section('scripts')
-    <script src="./scripts/cartManager.js"></script>
 @endsection
 
 @push('styles')

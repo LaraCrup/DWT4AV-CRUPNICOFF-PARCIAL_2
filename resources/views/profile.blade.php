@@ -49,49 +49,130 @@
 
     <section class="historySection">
         <h2 class="fontTitle">Historial de Compras</h2>
-        <div class="tableScroll">
-            <table class="purchaseHistory fontBody">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Producto</th>
-                        <th>Tamaño</th>
-                        <th>Cantidad</th>
-                        <th>Total</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>10/06/2024</td>
-                        <td>Torta de Chocolate</td>
-                        <td>Grande</td>
-                        <td>1</td>
-                        <td>$2500</td>
-                        <td>Entregado</td>
-                    </tr>
-                    <tr>
-                        <td>02/06/2024</td>
-                        <td>Torta de Frutilla</td>
-                        <td>Mediana</td>
-                        <td>2</td>
-                        <td>$4800</td>
-                        <td>Entregado</td>
-                    </tr>
-                    <tr>
-                        <td>25/05/2024</td>
-                        <td>Torta de Limón</td>
-                        <td>Chica</td>
-                        <td>1</td>
-                        <td>$2300</td>
-                        <td>Pendiente</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+        @php
+            $compras = auth()->user()->compras()->with('tortas')->orderBy('fecha_compra', 'desc')->get();
+        @endphp
+
+        @if($compras->count() > 0)
+            <div class="purchasesContainer">
+                @foreach($compras as $compra)
+                    <div class="purchaseCard fontBody">
+                        <div class="purchaseInfo">
+                            <div>
+                                <p><strong>Compra #{{ $compra->id }}</strong></p>
+                                <p>Fecha: {{ $compra->fecha_compra->format('d/m/Y') }}</p>
+                            </div>
+                            <div class="purchaseTotal">
+                                <p class="fontTitle">${{ number_format($compra->total, 2) }}</p>
+                            </div>
+                        </div>
+                        <div class="purchaseItems">
+                            <ul>
+                                @foreach($compra->tortas as $torta)
+                                    <li>
+                                        {{ $torta->nombre }}
+                                        @if($torta->pivot->tamano)
+                                            ({{ $torta->pivot->tamano->nombre }})
+                                        @endif
+                                        - Cantidad: {{ $torta->pivot->cantidad }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <a href="{{ route('compras.show', $compra->id) }}" class="btn btnPrimary btnSmall">Ver detalle</a>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="emptyState">
+                <p class="fontBody">Aún no has realizado ninguna compra.</p>
+                <a href="{{ route('tortas.index') }}" class="btn btnPrimary">Ir a comprar</a>
+            </div>
+        @endif
     </section>
 @endsection
 
 @section('scripts')
     <script src="./scripts/profile.js"></script>
 @endsection
+
+@push('styles')
+    <style>
+        .purchasesContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .purchaseCard {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+        }
+
+        .purchaseInfo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .purchaseTotal {
+            text-align: right;
+        }
+
+        .purchaseItems {
+            margin-bottom: 1rem;
+        }
+
+        .purchaseItems ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0.5rem 0 0 0;
+        }
+
+        .purchaseItems li {
+            padding: 0.5rem 0;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .purchaseItems li:not(:last-child) {
+            border-bottom: 1px solid #eee;
+        }
+
+        .btnSmall {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .emptyState {
+            text-align: center;
+            padding: 2rem;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .emptyState p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .purchaseInfo {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .purchaseTotal {
+                text-align: left;
+            }
+        }
+    </style>
+@endpush

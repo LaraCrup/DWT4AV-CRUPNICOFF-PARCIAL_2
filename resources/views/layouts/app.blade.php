@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Tortas Manuela')</title>
     <link rel="stylesheet" href="/styles/mainStyles.css">
     @yield('styles')
@@ -107,6 +108,45 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="/scripts/menu.js"></script>
+
+    <!-- Cargar el contador del carrito desde el servidor en todas las páginas -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCartCounterFromServer();
+        });
+
+        async function loadCartCounterFromServer() {
+            try {
+                const response = await fetch('/api/cart/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+                    }
+                });
+
+                const data = await response.json();
+                let itemCount = 0;
+                Object.values(data.items).forEach(item => {
+                    itemCount += item.cantidad;
+                });
+
+                // Actualizar todos los contadores
+                const cartCountElements = document.querySelectorAll('.cartCount');
+                cartCountElements.forEach(element => {
+                    element.textContent = itemCount;
+                    if (itemCount > 0) {
+                        element.style.display = 'flex';
+                    } else {
+                        element.style.display = 'none';
+                    }
+                });
+            } catch (error) {
+                console.error('Error cargando el contador del carrito:', error);
+            }
+        }
+    </script>
+
     @yield('scripts')
 </body>
 

@@ -66,7 +66,7 @@
                         </div>
                     </div>
                 @endif
-                <button id="addToCart" class="btn btnPrimary">Añadir al carrito</button>
+                <button id="addToCart" class="btn btnPrimary" data-torta-id="{{ $torta->id }}">Añadir al carrito</button>
                 @if($torta->alergeno)
                     <div class="allergens">
                         <p class="fontBody"><strong>Contiene:</strong> {{ $torta->alergeno }}</p>
