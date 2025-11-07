@@ -1,14 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     const ctx = document.getElementById('salesChart').getContext('2d');
 
-    // Obtener datos dinámicos de la vista
     const dailySalesData = window.dailySalesData || [];
 
-    // Transformar datos para Chart.js
     const labels = dailySalesData.map(item => item.fecha);
     const data = dailySalesData.map(item => item.total);
 
-    // Si no hay datos, usar datos de ejemplo
     const hasData = labels.length > 0;
     const chartLabels = hasData ? labels : ['29/08', '30/08', '31/08', '1/09', '3/09', '4/09', '5/09'];
     const chartData = hasData ? data : [12450, 9800, 10200, 11500, 13200, 16300, 15240];

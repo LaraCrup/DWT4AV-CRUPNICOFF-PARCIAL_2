@@ -28,19 +28,16 @@ class User extends Authenticatable
     protected $casts = [
     ];
 
-    // Relación: Rol 1 → n User
     public function rol(): BelongsTo
     {
         return $this->belongsTo(Rol::class);
     }
 
-    // Relación: User 1 → n Compra
     public function compras(): HasMany
     {
         return $this->hasMany(Compra::class, 'usuario_id');
     }
 
-    // Relación: User 1 → n Mensaje
     public function mensajes(): HasMany
     {
         return $this->hasMany(Mensaje::class, 'usuario_id');

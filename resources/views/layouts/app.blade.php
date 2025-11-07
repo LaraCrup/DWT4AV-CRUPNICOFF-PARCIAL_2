@@ -109,7 +109,6 @@
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="/scripts/menu.js"></script>
 
-    <!-- Cargar el contador del carrito desde el servidor en todas las páginas -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             loadCartCounterFromServer();
@@ -131,7 +130,6 @@
                     itemCount += item.cantidad;
                 });
 
-                // Actualizar todos los contadores
                 const cartCountElements = document.querySelectorAll('.cartCount');
                 cartCountElements.forEach(element => {
                     element.textContent = itemCount;

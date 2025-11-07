@@ -405,9 +405,7 @@ function validateUserEditForm(event) {
         Validator.removeError(emailInput);
     }
 
-    // Only validate password if one of the two fields has a value
     if (passwordInput.value || passwordConfirmInput.value) {
-        // Both fields must be filled if any is filled
         if (!passwordInput.value) {
             Validator.showError(passwordInput, 'Debes ingresar una contraseña');
             isValid = false;
@@ -428,7 +426,6 @@ function validateUserEditForm(event) {
             Validator.removeError(passwordConfirmInput);
         }
     } else {
-        // Both fields are empty - clear any errors
         Validator.removeError(passwordInput);
         Validator.removeError(passwordConfirmInput);
     }

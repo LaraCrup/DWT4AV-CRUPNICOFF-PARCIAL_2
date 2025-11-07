@@ -32,11 +32,9 @@ class CartController extends Controller
             'cantidad' => 'required|integer|min:1',
         ]);
 
-        // Obtener la torta y el tamaño
         $torta = Torta::findOrFail($validated['torta_id']);
         $tamano = Tamano::findOrFail($validated['tamano_id']);
 
-        // Obtener el precio de la relación torta_tamano
         $tortaTamano = $torta->tamanos()->where('tamanos.id', $validated['tamano_id'])->first();
 
         if (!$tortaTamano) {
@@ -48,17 +46,13 @@ class CartController extends Controller
 
         $precio = $tortaTamano->pivot->precio;
 
-        // Obtener el carrito actual
         $cart = session()->get('cart', []);
 
-        // Crear una clave única para el item (combinación de torta + tamaño)
         $itemKey = "torta_{$validated['torta_id']}_tamano_{$validated['tamano_id']}";
 
-        // Si el item ya existe en el carrito, incrementar la cantidad
         if (isset($cart[$itemKey])) {
             $cart[$itemKey]['cantidad'] += $validated['cantidad'];
         } else {
-            // Agregar nuevo item al carrito
             $cart[$itemKey] = [
                 'torta_id' => $validated['torta_id'],
                 'tamano_id' => $validated['tamano_id'],
@@ -70,7 +64,6 @@ class CartController extends Controller
             ];
         }
 
-        // Guardar el carrito en la sesión
         session()->put('cart', $cart);
 
         return response()->json([

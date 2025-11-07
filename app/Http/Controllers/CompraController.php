@@ -14,7 +14,6 @@ class CompraController extends Controller
      */
     public function checkout()
     {
-        // Verificar que el usuario esté autenticado
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Debes estar autenticado para proceder al checkout');
         }
@@ -80,7 +79,6 @@ class CompraController extends Controller
      */
     public function show(Compra $compra)
     {
-        // Verificar que el usuario sea el dueño de la compra
         if ($compra->usuario_id !== Auth::id()) {
             abort(403);
         }

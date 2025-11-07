@@ -12,7 +12,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Usuarios con mayores compras (top 10)
         $topUsers = User::select('users.id', 'users.name')
             ->selectRaw('SUM(compras.total) as total_spent')
             ->join('compras', 'users.id', '=', 'compras.usuario_id')
@@ -25,7 +24,6 @@ class DashboardController extends Controller
                 'amount' => '$' . number_format($user->total_spent, 2, ',', '.')
             ]);
 
-        // Productos más vendidos (top 4)
         $topProducts = Torta::select('tortas.id', 'tortas.nombre', 'tortas.imagen')
             ->selectRaw('SUM(compra_torta.cantidad) as total_quantity')
             ->join('compra_torta', 'tortas.id', '=', 'compra_torta.torta_id')
@@ -39,23 +37,18 @@ class DashboardController extends Controller
                 'image' => $torta->imagen ? '/storage/products/' . $torta->imagen : '/storage/products/chocolate.webp'
             ]);
 
-        // Resumen mensual (mes actual)
         $startOfMonth = Carbon::now()->startOfMonth();
         $endOfMonth = Carbon::now()->endOfMonth();
 
-        // Ingresos totales del mes
         $monthlyRevenue = Compra::whereBetween('fecha_compra', [$startOfMonth, $endOfMonth])
             ->sum('total');
 
-        // Cantidad de pedidos del mes
         $monthlyOrders = Compra::whereBetween('fecha_compra', [$startOfMonth, $endOfMonth])
             ->count();
 
-        // Nuevos usuarios registrados en el mes
         $newCustomers = User::whereBetween('fecha_registro', [$startOfMonth, $endOfMonth])
             ->count();
 
-        // Ventas diarias del mes actual
         $dailySales = Compra::selectRaw('DATE(fecha_compra) as fecha, SUM(total) as total')
             ->whereBetween('fecha_compra', [$startOfMonth, $endOfMonth])
             ->groupBy('fecha')
@@ -66,10 +59,8 @@ class DashboardController extends Controller
                 'total' => (float) $sale->total
             ]);
 
-        // Obtener ventas de hoy
         $salesToday = Compra::whereDate('fecha_compra', Carbon::today())->sum('total');
 
-        // Calcular promedio semanal (últimos 7 días con ventas)
         $sevenDaysAgo = Carbon::now()->subDays(7);
         $totalLastSevenDays = Compra::whereBetween('fecha_compra', [$sevenDaysAgo, Carbon::now()])->sum('total');
         $daysWithSalesLastWeek = Compra::whereBetween('fecha_compra', [$sevenDaysAgo, Carbon::now()])
@@ -78,8 +69,6 @@ class DashboardController extends Controller
             ->count ?? 1;
         $weeklyAverage = $daysWithSalesLastWeek > 0 ? $totalLastSevenDays / $daysWithSalesLastWeek : 0;
 
-        // Datos de ejemplo para los otros gráficos
-        // TODO: Reemplazar con datos reales de la base de datos
         $data = [
             'salesTodayAmount' => '$' . number_format($salesToday, 2, ',', '.'),
             'salesWeeklyAverage' => '$' . number_format($weeklyAverage, 2, ',', '.'),

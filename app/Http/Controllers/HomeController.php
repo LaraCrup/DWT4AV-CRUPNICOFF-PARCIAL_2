@@ -8,7 +8,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Obtener las tortas marcadas como destacadas para el carousel
         $tortasDestacadas = Torta::where('destacada', true)
             ->orderBy('created_at', 'desc')
             ->get();

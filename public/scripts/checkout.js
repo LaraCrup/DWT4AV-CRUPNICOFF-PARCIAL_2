@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (confirmPurchaseBtn) {
         confirmPurchaseBtn.addEventListener('click', async function() {
-            // Deshabilitar el botón mientras se procesa
             confirmPurchaseBtn.disabled = true;
             confirmPurchaseBtn.textContent = 'Procesando...';
 
@@ -20,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const data = await response.json();
 
                 if (data.success) {
-                    // Mostrar mensaje de éxito y redirigir
                     showMessage('Compra realizada exitosamente', 'success');
                     setTimeout(() => {
                         window.location.href = '/formReceived';
