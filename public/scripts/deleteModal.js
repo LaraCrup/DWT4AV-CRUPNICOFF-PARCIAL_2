@@ -11,18 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let itemToDelete = null;
     
-    function getItemType() {
-        const currentPage = window.location.pathname;
-        if (currentPage.includes('product')) {
-            return 'producto';
-        } else if (currentPage.includes('categor')) {
-            return 'categoría';
-        } else if (currentPage.includes('user')) {
-            return 'usuario';
-        }
-        return 'elemento';
-    }
-    
     function handleTableDelete(event) {
         const row = event.currentTarget.closest('tr');
         if (row) {
@@ -136,10 +124,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function showSuccessMessage() {
         const successMessage = document.createElement('div');
         successMessage.className = 'alertSuccess';
-        successMessage.textContent = getItemType() + ' eliminado con éxito';
-        
+        successMessage.textContent = 'Elemento eliminado con éxito';
+
         document.body.appendChild(successMessage);
-        
+
         setTimeout(() => {
             if (successMessage.parentNode) {
                 successMessage.parentNode.removeChild(successMessage);

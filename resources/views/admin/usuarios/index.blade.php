@@ -66,7 +66,7 @@
 </section>
 
 @include('partials.deleteModal', [
-    'route' => 'admin.usuarios.destroy',
+    'route' => route('admin.usuarios.destroy', ':id'),
     'itemName' => 'usuario'
 ])
 @endsection

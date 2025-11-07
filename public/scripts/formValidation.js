@@ -69,68 +69,62 @@ Object.assign(Validator, {
     validateProductName: function(name) {
         return name.trim().length >= 3;
     },
-    
-    validatePrice: function(price) {
-        return !isNaN(price) && parseFloat(price) > 0;
-    },
-    
+
     validateCategory: function(category) {
         return category && category !== "";
     },
-    
+
     validateImage: function(fileInput) {
         if (!fileInput.files || fileInput.files.length === 0) {
             return false;
         }
-        
+
         const file = fileInput.files[0];
         const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
         return validTypes.includes(file.type);
     },
-    
+
     validateSizes: function(form) {
         const sizeCheckboxes = form.querySelectorAll('input[name="sizes"]:checked');
         if (sizeCheckboxes.length === 0) {
             return false;
         }
-        
+
         let allValid = true;
         sizeCheckboxes.forEach(checkbox => {
             const size = checkbox.value;
             const portionsInput = document.getElementById(`sizePorciones${size.charAt(0).toUpperCase() + size.slice(1)}`);
             const priceInput = document.getElementById(`sizePrecio${size.charAt(0).toUpperCase() + size.slice(1)}`);
-            
+
             if (!portionsInput.value || parseInt(portionsInput.value) <= 0) {
                 Validator.showError(portionsInput, 'Ingresa un número válido de porciones');
                 allValid = false;
             }
-            
+
             if (!priceInput.value || parseFloat(priceInput.value) <= 0) {
                 Validator.showError(priceInput, 'Ingresa un precio válido');
                 allValid = false;
             }
         });
-        
-        return allValid;
-    }
-});
 
-Object.assign(Validator, {
+        return allValid;
+    },
+
     validateUserName: function(name) {
         return name.trim().length >= 3;
     },
-    
+
     validateUserEmail: function(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     },
-    
+
     validateUserPassword: function(password) {
-        return password.length >= 6 && 
-               /[a-zA-Z]/.test(password) && 
+        return password.length >= 6 &&
+               /[a-zA-Z]/.test(password) &&
                /\d/.test(password);
     },
-    
+
     validateUserRole: function(role) {
         return role && (role === 'admin' || role === 'usuario');
     }
@@ -252,7 +246,6 @@ function validateProductForm(event) {
     }
     
     if (!Validator.validateSizes(form)) {
-        const sizesGroup = document.querySelector('.sizeGroup');
         if (document.querySelectorAll('input[name="sizes"]:checked').length === 0) {
             const firstRow = document.querySelector('.sizeRow');
             Validator.showError(firstRow, 'Selecciona al menos un tamaño');
@@ -305,7 +298,6 @@ function validateProductEditForm(event) {
     }
     
     if (!Validator.validateSizes(form)) {
-        const sizesGroup = document.querySelector('.sizeGroup');
         if (document.querySelectorAll('input[name="sizes"]:checked').length === 0) {
             const firstRow = document.querySelector('.sizeRow');
             Validator.showError(firstRow, 'Selecciona al menos un tamaño');

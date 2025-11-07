@@ -25,8 +25,6 @@ class User extends Authenticatable
         'password',
     ];
 
-    protected $casts = [
-    ];
 
     public function rol(): BelongsTo
     {

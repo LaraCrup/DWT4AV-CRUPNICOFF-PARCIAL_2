@@ -88,7 +88,7 @@
 </section>
 
 @include('partials.deleteModal', [
-    'route' => 'admin.tortas.destroy',
+    'route' => route('admin.tortas.destroy', ':id'),
     'itemName' => 'producto'
 ])
 @endsection
