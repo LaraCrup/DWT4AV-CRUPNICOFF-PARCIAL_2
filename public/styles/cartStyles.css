@@ -113,7 +113,6 @@
     color: #ff6b6b;
 }
 
-/* Empty Cart Message */
 .emptyCartMessage {
     display: none;
     flex-direction: column;
@@ -128,7 +127,6 @@
     font-size: 1.25rem;
 }
 
-/* Checkout Section */
 .checkoutSection {
     width: 100%;
     display: flex;

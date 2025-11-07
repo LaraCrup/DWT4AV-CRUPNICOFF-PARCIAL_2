@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/styles/mainStyles.css">
     <link rel="stylesheet" href="/styles/mainAdminStyles.css">
     <link rel="stylesheet" href="/styles/formsStyles.css">
+    <link rel="stylesheet" href="/styles/logoutModal.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @stack('styles')
 </head>

@@ -21,7 +21,7 @@
 
 <script>
     const deleteModalConfig = {
-        route: "{{ $route }}",
+        baseRoute: "{{ $route }}",
         itemName: "{{ $itemName ?? 'elemento' }}"
     };
 
@@ -33,7 +33,7 @@
 
             document.getElementById('deleteItemInfo').textContent = `${itemName}: "${nombre}" será eliminada permanentemente.`;
 
-            const routeUrl = "{{ route($route, '__ID__') }}".replace('__ID__', id);
+            const routeUrl = deleteModalConfig.baseRoute.replace(':id', id);
             document.getElementById('deleteForm').action = routeUrl;
 
             document.getElementById('deleteModal').style.display = 'flex';

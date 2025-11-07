@@ -21,7 +21,7 @@
                 <div class="formGroup">
                     <label for="categoria_id">Categoría</label>
                     <select id="categoria_id" name="categoria_id" required>
-                        <option value="" selected disabled>Seleccionar categoría</option>
+                        <option value="" disabled>Seleccionar categoría</option>
                         @foreach($categorias as $categoria)
                             <option value="{{ $categoria->id }}" {{ old('categoria_id', $torta->categoria_id) == $categoria->id ? 'selected' : '' }}>
                                 {{ $categoria->nombre }}

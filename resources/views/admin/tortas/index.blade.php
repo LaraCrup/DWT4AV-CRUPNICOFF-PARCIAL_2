@@ -29,7 +29,7 @@
                 <tr>
                     <td>{{ $torta->id }}</td>
                     <td>
-                        <img src="{{ asset('storage/products/' . $torta->imagen) }}" alt="{{ $torta->nombre }}" width="100%">
+                        <img src="{{ asset('storage/products/' . $torta->imagen) }}" alt="{{ $torta->nombre }}" style="width: 100%; height: auto;">
                     </td>
                     <td>{{ $torta->nombre }}</td>
                     <td>{{ $torta->categoria->nombre }}</td>
